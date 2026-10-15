@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="theme-color" content="#0b1020">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+      MathLab — Kalkulator Matematika
+    </title>
+    <style>
+    :root {
+    --bg:#0b1020;
+    --panel:#121a2e;
+    --panel2:#18233b;
+    --text:#edf3ff;
+    --muted:#9aa9c5;
+    --accent:#79e0c3;
+    --accent2:#7aa7ff;
+    --line:#2a3651;
+    --danger:#ff8e9b
+}
+* {
+    box-sizing:border-box
+}
+body {
+    margin:0;
+    background:radial-gradient(ellipse at top left,#17294a 0,transparent 45%),var(--bg);
+    color:var(--text);
+    font:15px/1.5 Inter,system-ui,-apple-system,Segoe UI,sans-serif;
+    min-height:100vh
+}
+button,input,select {
+    font:inherit
+}
+button {
+    cursor:pointer
+}
+.wrap {
+    max-width:1240px;
+    margin:auto;
+    padding:28px 20px 48px
+}
+.top {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:18px;
+    margin-bottom:26px
+}
+.brand {
+    display:flex;
+    align-items:center;
+    gap:12px
+}
+.logo {
+    width:44px;
+    height:44px;
+    border-radius:14px;
+    background:linear-gradient(135deg,var(--accent),var(--accent2));
+    display:grid;
+    place-items:center;
+    color:#071421;
+    font-weight:900;
+    font-size:23px;
+    box-shadow:0 8px 28px #79e0c333
+}
+.brand h1 {
+    font-size:21px;
+    margin:0;
+    letter-spacing:-.5px
+}
+.brand p {
+    margin:2px 0 0;
+    color:var(--muted);
+    font-size:12px
+}
+.pill {
+    border:1px solid var(--line);
+    color:var(--muted);
+    padding:7px 12px;
+    border-radius:99px;
+    font-size:12px
+}
+.hero {
+    margin-bottom:24px
+}
+.eyebrow {
+    color:var(--accent);
+    font-weight:750;
+    text-transform:uppercase;
+    letter-spacing:1.7px;
+    font-size:11px
+}
+.hero h2 {
+    font-size:clamp(27px,4vw,42px);
+    line-height:1.12;
+    letter-spacing:-1.5px;
+    margin:9px 0
+}
+.hero p {
+    color:var(--muted);
+    max-width:660px;
+    margin:0
+}
+.layout {
+    display:grid;
+    grid-template-columns:245px minmax(0,1fr);
+    gap:18px;
+    align-items:start
+}
+.side,.main,.card {
+    background:#111a2ddd;
+    border:1px solid var(--line);
+    border-radius:20px
+}
+.side {
+    padding:14px;
+    position:sticky;
+    top:14px
+}
+.search {
+    width:100%;
+    background:#0b1325;
+    border:1px solid var(--line);
+    color:var(--text);
+    padding:11px 12px;
+    border-radius:11px;
+    outline:none;
+    margin-bottom:12px
+}
+.nav {
+    display:grid;
+    gap:5px
+}
+.nav button {
+    background:transparent;
+    border:0;
+    color:var(--muted);
+    text-align:left;
+    padding:10px 11px;
+    border-radius:10px;
+    display:flex;
+    align-items:center;
+    gap:10px
+}
+.nav button:hover,.nav button.active {
+    background:#21304a;
+    color:var(--text)
+}
+.nav button.active {
+    box-shadow:inset 3px 0 var(--accent)
+}
+.ico {
+    width:23px;
+    text-align:center
+}
+.main {
+    padding:22px;
+    min-height:560px
+}
+.mainhead {
+    display:flex;
+    justify-content:space-between;
+    align-items:start;
+    gap:12px;
+    margin-bottom:20px
+}
+.mainhead h3 {
+    font-size:22px;
+    margin:0 0 4px
+}
+.mainhead p {
+    margin:0;
+    color:var(--muted);
+    font-size:13px
+}
+.tag {
+    font-size:11px;
+    color:var(--accent);
+    background:#79e0c314;
+    border:1px solid #79e0c333;
+    padding:5px 9px;
+    border-radius:99px;
+    white-space:nowrap
+}
+.fields {
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:14px
+}
+.field {
+    display:grid;
+    gap:6px
+}
+.field label {
+    font-size:12px;
+    color:var(--muted)
+}
+.field input,.field select {
+    width:100%;
+    background:#0b1325;
+    border:1px solid var(--line);
+    border-radius:11px;
+    padding:12px;
+    color:var(--text);
+    outline:none
+}
+.field input:focus,.field select:focus,.search:focus {
+    border-color:var(--accent)
+}
+.actions {
+    display:flex;
+    gap:9px;
+    margin:18px 0;
+    flex-wrap:wrap
+}
+.primary,.secondary {
+    border:0;
+    border-radius:11px;
+    padding:11px 17px;
+    font-weight:750
+}
+.primary {
+    background:var(--accent);
+    color:#082019
+}
+.primary:hover {
+    filter:brightness(1.05)
+}
+.secondary {
+    background:#202d46;
+    color:var(--text);
+    border:1px solid var(--line)
+}
+.result {
+    border:1px solid #79e0c34d;
+    background:linear-gradient(120deg,#16382f66,#17284466);
+    border-radius:16px;
+    padding:17px;
+    margin-top:8px
+}
+.result .label {
+    color:var(--muted);
+    font-size:12px
+}
+.result .value {
+    font-size:clamp(23px,4vw,34px);
+    font-weight:800;
+    letter-spacing:-.7px;
+    overflow-wrap:anywhere;
+    margin:4px 0 8px
+}
+.result .formula {
+    font-size:13px;
+    color:#c4d3ec
+}
+.steps {
+    margin-top:17px;
+    padding-top:14px;
+    border-top:1px solid #ffffff16
+}
+.steps h4 {
+    margin:0 0 8px;
+    font-size:13px
+}
+.steps ol {
+    margin:0;
+    padding-left:20px;
+    color:#c4d3ec;
+    font-size:13px
+}
+.steps li {
+    margin:5px 0
+}
+.hidden {
+    display:none!important
+}
+.quick {
+    display:flex;
+    gap:7px;
+    flex-wrap:wrap;
+    margin:14px 0
+}
+.chip {
+    background:#17243b;
+    color:#c9d8f1;
+    border:1px solid var(--line);
+    padding:6px 10px;
+    border-radius:99px;
+    font-size:12px
+}
+.note {
+    color:var(--muted);
+    font-size:12px;
+    margin-top:14px
+}
+.history {
+    margin-top:22px
+}
+.history h4 {
+    font-size:13px;
+    margin:0 0 8px
+}
+.historylist {
+    display:grid;
+    gap:7px
+}
+.historyitem {
+    background:#0b1325;
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:10px 12px;
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+    font-size:12px
+}
+.historyitem span:first-child {
+    color:var(--muted)
+}
+.empty {
+    color:var(--muted);
+    font-size:13px;
+    padding:12px 0
+}
+.footer {
+    text-align:center;
+    color:#71819e;
+    font-size:11px;
+    margin-top:24px
+}
+.scientific {
+    display:grid;
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    gap:8px;
+    margin-top:14px
+}
+.key {
+    padding:12px 5px;
+    border-radius:10px;
+    background:#1c2942;
+    border:1px solid var(--line);
+    color:var(--text)
+}
+.key:hover {
+    background:#293b5c
+}
+.key.op {
+    color:var(--accent)
+}
+@media(max-width:760px) {
+    .wrap {
+        padding:18px 12px 30px
+    }
+    .layout {
+        grid-template-columns:1fr
+    }
+    .side {
+        position:static;
+        padding:10px
+    }
+    .nav {
+        display:flex;
+        overflow-x:auto;
+        padding-bottom:2px
+    }
+    .nav button {
+        white-space:nowrap;
+        flex-shrink:0
+    }
+    .nav button.active {
+        box-shadow:inset 0 -3px var(--accent)
+    }
+    .search {
+        margin-bottom:8px
+    }
+    .main {
+        padding:16px
+    }
+    .pill {
+        display:none
+    }
+    .fields {
+        grid-template-columns:1fr
+    }
+    .mainhead h3 {
+        font-size:19px
+    }
+}
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="top">
+        <div class="brand">
+          <div class="logo">
+            ∑
+          </div>
+          <div>
+            <h1>
+              MathLab
+            </h1>
+            <p>
+              Kalkulator matematika serbaguna
+            </p>
+          </div>
+        </div>
+        <div class="pill">
+          ✦ Gratis · Tanpa login
+        </div>
+      </header>
+      <section class="hero">
+        <div class="eyebrow">
+          Belajar · Hitung · Pahami
+        </div>
+        <h2>
+          Semua rumus matematika,
+          <br>
+          di satu tempat.
+        </h2>
+        <p>
+          Pilih materi, masukkan angka, lalu hitung. Hasil disertai rumus dan langkah pengerjaan agar bukan cuma dapat jawaban, tapi juga paham caranya.
+        </p>
+      </section>
+      <div class="layout">
+        <aside class="side">
+          <input id="search" class="search" placeholder="Cari rumus..." aria-label="Cari rumus">
+          <nav class="nav" id="nav">
+            <button class="active" data-cat="basic">
+              <span class="ico">
+                ⌗
+              </span>
+              Kalkulator dasar
+            </button>
+            <button data-cat="geometry">
+              <span class="ico">
+                △
+              </span>
+              Bangun datar
+            </button>
+            <button data-cat="solid">
+              <span class="ico">
+                ⬡
+              </span>
+              Bangun ruang
+            </button>
+            <button data-cat="algebra">
+              <span class="ico">
+                𝑥
+              </span>
+              Aljabar
+            </button>
+            <button data-cat="trig">
+              <span class="ico">
+                ∠
+              </span>
+              Trigonometri
+            </button>
+            <button data-cat="statistics">
+              <span class="ico">
+                ▥
+              </span>
+              Statistika
+            </button>
+            <button data-cat="sequence">
+              <span class="ico">
+                ↗
+              </span>
+              Barisan & deret
+            </button>
+            <button data-cat="social">
+              <span class="ico">
+                ％
+              </span>
+              Aritmetika sosial
+            </button>
+            <button data-cat="conversion">
+              <span class="ico">
+                ⇄
+              </span>
+              Konversi satuan
+            </button>
+          </nav>
+        </aside>
+        <main class="main">
+          <div class="mainhead">
+            <div>
+              <h3 id="title">
+                Kalkulator dasar
+              </h3>
+              <p id="desc">
+                Hitung operasi matematika sehari-hari.
+              </p>
+            </div>
+            <span class="tag" id="count">
+              12 rumus
+            </span>
+          </div>
+          <div class="field" id="formulaWrap">
+            <label for="formula" id="formulaLabel">
+              Pilih operasi
+            </label>
+            <select id="formula">
+            </select>
+          </div>
+          <div class="quick" id="quick">
+          </div>
+          <div class="fields" id="fields">
+          </div>
+          <div id="scientific" class="scientific hidden">
+            <button class="key" data-fn="sin">
+              sin
+            </button>
+            <button class="key" data-fn="cos">
+              cos
+            </button>
+            <button class="key" data-fn="tan">
+              tan
+            </button>
+            <button class="key" data-fn="sqrt">
+              √
+            </button>
+            <button class="key" data-fn="log">
+              log
+            </button>
+            <button class="key" data-fn="ln">
+              ln
+            </button>
+            <button class="key" data-fn="square">
+              x²
+            </button>
+            <button class="key" data-fn="pi">
+              π
+            </button>
+          </div>
+          <div class="actions">
+            <button class="primary" id="calculate">
+              Hitung hasil ↗
+            </button>
+            <button class="secondary" id="reset">
+              Reset
+            </button>
+          </div>
+          <section class="result hidden" id="result" aria-live="polite">
+            <div class="label">
+              HASIL PERHITUNGAN
+            </div>
+            <div class="value" id="value">
+              —
+            </div>
+            <div class="formula" id="formulaText">
+            </div>
+            <div class="steps" id="steps">
+              <h4>
+                Langkah pengerjaan
+              </h4>
+              <ol id="stepList">
+              </ol>
+            </div>
+          </section>
+          <div class="history">
+            <h4>
+              Riwayat hitungan
+            </h4>
+            <div class="historylist" id="history">
+              <div class="empty">
+                Hasil hitunganmu akan muncul di sini.
+              </div>
+            </div>
+          </div>
+          <p class="note">
+            Catatan: hasil numerik dibulatkan bila desimalnya sangat panjang. Untuk soal sekolah, periksa kembali satuan dan syarat rumusnya.
+          </p>
+        </main>
+      </div>
+      <div class="footer">
+        MathLab · Alat bantu belajar matematika
+      </div>
+    </div>
+    <script>
+    const categories= {
+        basic: {
+            title:'Kalkulator dasar',desc:'Operasi dasar, pangkat, akar, dan fungsi ilmiah.',items:[['add','Penjumlahan','a + b',['Angka pertama|a','Angka kedua|b']],['subtract','Pengurangan','a − b',['Angka pertama|a','Angka kedua|b']],['multiply','Perkalian','a × b',['Angka pertama|a','Angka kedua|b']],['divide','Pembagian','a ÷ b',['Angka pertama|a','Angka kedua|b']],['percent','Persentase','a% dari b',['Persentase (%)|a','Nilai|b']],['power','Pangkat','aᵇ',['Basis|a','Pangkat|b']],['root','Akar kuadrat','√a',['Bilangan (≥ 0)|a']],['remainder','Sisa pembagian','a mod b',['Angka pertama|a','Pembagi|b']],['abs','Nilai mutlak','|a|',['Bilangan|a']],['factorial','Faktorial','a!',['Bilangan bulat 0–170|a']],['gcd','FPB','FPB(a,b)',['Angka pertama|a','Angka kedua|b']],['lcm','KPK','KPK(a,b)',['Angka pertama|a','Angka kedua|b'] ]]
+        },
+        geometry: {
+            title:'Bangun datar',desc:'Hitung luas, keliling, dan ukuran bangun datar.',items:[['rectArea','Luas persegi panjang','p × l',['Panjang (p)|a','Lebar (l)|b']],['rectPerim','Keliling persegi panjang','2(p + l)',['Panjang (p)|a','Lebar (l)|b']],['squareArea','Luas persegi','s²',['Sisi (s)|a']],['squarePerim','Keliling persegi','4s',['Sisi (s)|a']],['triangleArea','Luas segitiga','½ × alas × tinggi',['Alas|a','Tinggi|b']],['trianglePerim','Keliling segitiga','a + b + c',['Sisi a|a','Sisi b|b','Sisi c|c']],['circleArea','Luas lingkaran','πr²',['Jari-jari (r)|a']],['circlePerim','Keliling lingkaran','2πr',['Jari-jari (r)|a']],['trapezoidArea','Luas trapesium','½(a + b) × t',['Sisi sejajar a|a','Sisi sejajar b|b','Tinggi|c']],['parallelogramArea','Luas jajar genjang','alas × tinggi',['Alas|a','Tinggi|b']],['rhombusArea','Luas belah ketupat','½ × d₁ × d₂',['Diagonal 1|a','Diagonal 2|b']],['pythagoras','Teorema Pythagoras','√(a² + b²)',['Sisi siku-siku a|a','Sisi siku-siku b|b']]]
+        },
+        solid: {
+            title:'Bangun ruang',desc:'Volume dan luas permukaan bangun tiga dimensi.',items:[['cubeVol','Volume kubus','s³',['Sisi|a']],['cubeSA','Luas permukaan kubus','6s²',['Sisi|a']],['cuboidVol','Volume balok','p × l × t',['Panjang|a','Lebar|b','Tinggi|c']],['cuboidSA','Luas permukaan balok','2(pl + pt + lt)',['Panjang|a','Lebar|b','Tinggi|c']],['cylinderVol','Volume tabung','πr²t',['Jari-jari|a','Tinggi|b']],['cylinderSA','Luas permukaan tabung','2πr(r + t)',['Jari-jari|a','Tinggi|b']],['coneVol','Volume kerucut','⅓πr²t',['Jari-jari|a','Tinggi|b']],['sphereVol','Volume bola','⁴⁄₃πr³',['Jari-jari|a']],['sphereSA','Luas permukaan bola','4πr²',['Jari-jari|a']],['prismVol','Volume prisma (alas segitiga)','½ × a × tₐ × tinggi prisma',['Alas segitiga|a','Tinggi segitiga|b','Tinggi prisma|c']]]
+        },
+        algebra: {
+            title:'Aljabar & persamaan',desc:'Selesaikan persamaan dan hitung bentuk aljabar.',items:[['linear','Persamaan linear ax + b = c','x = (c − b) / a',['Koefisien a|a','Konstanta b|b','Nilai c|c']],['quadratic','Akar persamaan kuadrat','x = (−b ± √D) / 2a',['Koefisien a|a','Koefisien b|b','Konstanta c|c']],['discriminant','Diskriminan','D = b² − 4ac',['Koefisien a|a','Koefisien b|b','Konstanta c|c']],['slope','Gradien dua titik','(y₂ − y₁)/(x₂ − x₁)',['x₁|a','y₁|b','x₂|c','y₂|d']],['mean2','Rata-rata dua angka','(a + b) / 2',['Angka pertama|a','Angka kedua|b']],['ratio','Perbandingan a : b','a/b',['Nilai a|a','Nilai b|b']],['spldv','SPLDV (metode determinan)','x = (c₁b₂ − b₁c₂)/D; y = (a₁c₂ − c₁a₂)/D',['Koefisien a₁|a','Koefisien b₁|b','Konstanta c₁|c','Koefisien a₂|d','Koefisien b₂|e','Konstanta c₂|f']]]
+        },
+        trig: {
+            title:'Trigonometri',desc:'Fungsi trigonometri, sudut, dan sisi segitiga.',items:[['sin','Sinus (derajat)','sin(θ)',['Sudut (°)|a']],['cos','Cosinus (derajat)','cos(θ)',['Sudut (°)|a']],['tan','Tangen (derajat)','tan(θ)',['Sudut (°)|a']],['asin','Invers sinus','sin⁻¹(a)',['Nilai antara −1 dan 1|a']],['lawCos','Aturan cosinus: sisi c','√(a² + b² − 2ab cos C)',['Sisi a|a','Sisi b|b','Sudut C (°)|c']],['degreeRad','Derajat ke radian','θ × π / 180',['Sudut (°)|a']],['radDegree','Radian ke derajat','θ × 180 / π',['Sudut (rad)|a']]]
+        },
+        statistics: {
+            title:'Statistika & peluang',desc:'Ringkasan data, ukuran pemusatan, dan peluang.',items:[['mean','Mean (rata-rata)','jumlah data / banyak data',['Data, pisahkan dengan koma|list']],['median','Median','nilai tengah setelah diurutkan',['Data, pisahkan dengan koma|list']],['mode','Modus','nilai yang paling sering muncul',['Data, pisahkan dengan koma|list']],['range','Jangkauan','maksimum − minimum',['Data, pisahkan dengan koma|list']],['variance','Varians populasi','Σ(x − μ)² / n',['Data, pisahkan dengan koma|list']],['stddev','Simpangan baku populasi','√varians',['Data, pisahkan dengan koma|list']],['probability','Peluang sederhana','kejadian yang diinginkan / total',['Kejadian yang diinginkan|a','Jumlah semua kemungkinan|b']],['combination','Kombinasi nCr','n! / (r!(n−r)!)',['Jumlah objek (n)|a','Yang dipilih (r)|b']],['permutation','Permutasi nPr','n! / (n−r)!',['Jumlah objek (n)|a','Yang dipilih (r)|b']]]
+        },
+        sequence: {
+            title:'Barisan & deret',desc:'Barisan aritmetika dan geometri.',items:[['arithTerm','Suku ke-n aritmetika','Uₙ = a + (n−1)b',['Suku pertama (a)|a','Beda (b)|b','Nomor suku (n)|c']],['arithSum','Jumlah n suku aritmetika','Sₙ = n/2 × (2a + (n−1)b)',['Suku pertama (a)|a','Beda (b)|b','Banyak suku (n)|c']],['geoTerm','Suku ke-n geometri','Uₙ = a × rⁿ⁻¹',['Suku pertama (a)|a','Rasio (r)|b','Nomor suku (n)|c']],['geoSum','Jumlah n suku geometri (r ≠ 1)','Sₙ = a(rⁿ − 1)/(r − 1)',['Suku pertama (a)|a','Rasio (r)|b','Banyak suku (n)|c']],['compound','Bunga majemuk','A = P(1 + r)ⁿ',['Modal awal|a','Bunga per periode (%)|b','Jumlah periode|c']]]
+        },
+        social: {
+            title:'Aritmetika sosial',desc:'Diskon, pajak, untung-rugi, dan bunga.',items:[['discount','Harga setelah diskon','harga × (1 − diskon/100)',['Harga awal|a','Diskon (%)|b']],['tax','Harga termasuk pajak','harga × (1 + pajak/100)',['Harga sebelum pajak|a','Pajak (%)|b']],['profit','Persentase keuntungan','(jual − beli)/beli × 100%',['Harga beli|a','Harga jual|b']],['loss','Persentase kerugian','(beli − jual)/beli × 100%',['Harga beli|a','Harga jual|b']],['simpleInterest','Bunga tunggal','modal × bunga × waktu',['Modal|a','Bunga per tahun (%)|b','Waktu (tahun)|c']],['markup','Persentase perubahan','(baru − lama)/lama × 100%',['Nilai awal|a','Nilai akhir|b']]]
+        },
+        conversion: {
+            title:'Konversi satuan',desc:'Konversi panjang, massa, suhu, dan kecepatan.',items:[['length','Panjang','ubah satuan panjang',['Nilai|a','Dari satuan|from','Ke satuan|to']],['mass','Massa','ubah satuan massa',['Nilai|a','Dari satuan|from','Ke satuan|to']],['temperature','Suhu','ubah suhu',['Nilai|a','Dari satuan|from','Ke satuan|to']],['speed','Kecepatan','km/jam ↔ m/s',['Nilai|a','Dari satuan|from','Ke satuan|to']]]
+        }
+    };
+    const titles= {
+        add:'Penjumlahan',subtract:'Pengurangan',multiply:'Perkalian',divide:'Pembagian',percent:'Persentase',power:'Pangkat',root:'Akar kuadrat',remainder:'Sisa pembagian',abs:'Nilai mutlak',factorial:'Faktorial',gcd:'FPB',lcm:'KPK',rectArea:'Luas persegi panjang',rectPerim:'Keliling persegi panjang',squareArea:'Luas persegi',squarePerim:'Keliling persegi',triangleArea:'Luas segitiga',trianglePerim:'Keliling segitiga',circleArea:'Luas lingkaran',circlePerim:'Keliling lingkaran',trapezoidArea:'Luas trapesium',parallelogramArea:'Luas jajar genjang',rhombusArea:'Luas belah ketupat',pythagoras:'Teorema Pythagoras',cubeVol:'Volume kubus',cubeSA:'Luas permukaan kubus',cuboidVol:'Volume balok',cuboidSA:'Luas permukaan balok',cylinderVol:'Volume tabung',cylinderSA:'Luas permukaan tabung',coneVol:'Volume kerucut',sphereVol:'Volume bola',sphereSA:'Luas permukaan bola',prismVol:'Volume prisma segitiga',linear:'Persamaan linear',quadratic:'Persamaan kuadrat',discriminant:'Diskriminan',slope:'Gradien dua titik',mean2:'Rata-rata dua angka',ratio:'Perbandingan',spldv:'SPLDV',sin:'Sinus',cos:'Cosinus',tan:'Tangen',asin:'Invers sinus',lawCos:'Aturan cosinus',degreeRad:'Derajat ke radian',radDegree:'Radian ke derajat',mean:'Mean',median:'Median',mode:'Modus',range:'Jangkauan',variance:'Varians',stddev:'Simpangan baku',probability:'Peluang',combination:'Kombinasi',permutation:'Permutasi',arithTerm:'Suku ke-n aritmetika',arithSum:'Jumlah deret aritmetika',geoTerm:'Suku ke-n geometri',geoSum:'Jumlah deret geometri',compound:'Bunga majemuk',discount:'Harga setelah diskon',tax:'Harga termasuk pajak',profit:'Persentase keuntungan',loss:'Persentase kerugian',simpleInterest:'Bunga tunggal',markup:'Persentase perubahan',length:'Konversi panjang',mass:'Konversi massa',temperature:'Konversi suhu',speed:'Konversi kecepatan'
+    };
+    const units= {
+        length: {
+            mm:.001,cm:.01,m:1,km:1000,in:0.0254,ft:.3048
+        },
+        mass: {
+            mg:.000001,g:.001,kg:1,ton:1000
+        },
+        speed: {
+            'm/s':1,'km/jam':1/3.6
+        }
+    };
+    let cat='basic',history=[];
+    const $=id=>document.getElementById(id);
+    const num=v=> {
+        const n=Number(v);
+        if(!Number.isFinite(n))throw Error('Masukkan angka yang valid.');
+        return n
+    };
+    const fmt=n=> {
+        if(typeof n==='string')return n;
+        if(!Number.isFinite(n))return String(n);
+        return Number(n.toPrecision(10)).toLocaleString('id-ID',{maximumFractionDigits:8})
+    };
+    function current() {
+        return categories[cat].items.find(x=>x[0]===$('formula').value)||categories[cat].items[0]
+    }
+    function renderNav() {
+        document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('active',b.dataset.cat===cat));
+        $('title').textContent=categories[cat].title;
+        $('desc').textContent=categories[cat].desc;
+        $('count').textContent=categories[cat].items.length+' rumus';
+        $('formula').innerHTML=categories[cat].items.map(i=>`<option value="${i[0]}">${titles[i[0]]||i[1]}</option>`).join('');
+        renderFields();
+        $('result').classList.add('hidden');
+        $('scientific').classList.toggle('hidden',cat!=='basic');$('quick').innerHTML=cat==='basic'?'<button class="chip" data-set="a" data-value="3.14">π ≈ 3,14</button><button class="chip" data-set="a" data-value="2.71828">e ≈ 2,718</button><button class="chip" data-set="a" data-value="100">100</button>':cat==='geometry'?'<span class="chip">Pastikan semua ukuran dalam satuan yang sama</span>':cat==='statistics'?'<span class="chip">Contoh data: 4, 6, 6, 8, 10</span>':''
+    }
+    function renderFields() {
+        const item=current();
+        $('fields').innerHTML=item[3].map(x=>{let [label,key]=x.split('|');if(key==='list')return `<div class="field" style="grid-column:1/-1"><label>${label}</label><input id="v_list" placeholder="Contoh: 4, 6, 6, 8, 10"></div>`;if(key==='from'||key==='to'){let opts=key==='from'||key==='to'?(cat==='conversion'&&item[0]==='temperature'?['C','F','K']:cat==='conversion'&&item[0]==='speed'?['km/jam','m/s']:cat==='conversion'&&item[0]==='mass'?['g','kg','mg','ton']:['mm','cm','m','km','in','ft']):[];return `<div class="field"><label>${label}</label><select id="v_${key}">${opts.map(o=>`<option>${o}</option>`).join('')}</select></div>`}return `<div class="field"><label>${label}</label><input id="v_${key}" type="number" step="any" placeholder="Masukkan ${label.toLowerCase()}" ${key==='a'?'autofocus':''}></div>`}).join('')
+    }
+    $('nav').addEventListener('click',e=>{const b=e.target.closest('button[data-cat]');if(b){cat=b.dataset.cat;renderNav()}});$('formula').addEventListener('change',()=>{renderFields();$('result').classList.add('hidden')});$('search').addEventListener('input',e=>{const q=e.target.value.toLowerCase();document.querySelectorAll('#nav button').forEach(b=>{const c=categories[b.dataset.cat];b.style.display=(!q||c.title.toLowerCase().includes(q)||c.items.some(i=>(titles[i[0]]||i[1]).toLowerCase().includes(q)))?'flex':'none'})});
+    $('quick').addEventListener('click',e=>{const b=e.target.closest('[data-set]');if(b){const el=$('v_'+b.dataset.set);if(el)el.value=b.dataset.value}});
+    function gcd(a,b) {
+        a=Math.abs(Math.trunc(a));
+        b=Math.abs(Math.trunc(b));
+        while(b)[a,b]=[b,a%b];
+        return a
+    }
+    function fact(n) {
+        if(!Number.isInteger(n)||n<0||n>170)throw Error('Faktorial harus bilangan bulat dari 0 sampai 170.');
+        let r=1;
+        for(let i=2;i<=n;i++)r*=i;
+        return r
+    }
+    function list() {
+        const s=$('v_list').value.trim();
+        if(!s)throw Error('Masukkan data yang dipisahkan koma.');
+        const a=s.split(/[,;\s]+/).filter(Boolean).map(Number);
+        if(a.some(n=>!Number.isFinite(n)))throw Error('Data harus berupa angka.');
+        return a
+    }
+    function read(k) {
+        const el=$('v_'+k);
+        if(!el)throw Error('Lengkapi semua input.');
+        if(el.value.trim()==='')throw Error('Lengkapi semua input terlebih dahulu.');
+        return num(el.value)
+    }
+    function calc() {
+        let id=current()[0],a,b,c,d,e,f,r,formula='',steps=[];
+        const need=(...ks)=>ks.map(read);
+        switch(id) {
+            case'add':[a,b]=need('a','b');
+            r=a+b;
+            formula=`${fmt(a)} + ${fmt(b)} = ${fmt(r)}`;
+            break;
+            case'subtract':[a,b]=need('a','b');
+            r=a-b;
+            formula=`${fmt(a)} − ${fmt(b)} = ${fmt(r)}`;
+            break;
+            case'multiply':[a,b]=need('a','b');
+            r=a*b;
+            formula=`${fmt(a)} × ${fmt(b)} = ${fmt(r)}`;
+            break;
+            case'divide':[a,b]=need('a','b');
+            if(!b)throw Error('Tidak bisa membagi dengan nol.');
+            r=a/b;
+            formula=`${fmt(a)} ÷ ${fmt(b)} = ${fmt(r)}`;
+            break;
+            case'percent':[a,b]=need('a','b');
+            r=a/100*b;
+            formula=`${fmt(a)}% × ${fmt(b)} = ${fmt(r)}`;
+            break;
+            case'power':[a,b]=need('a','b');
+            r=a**b;
+            formula=`${fmt(a)} pangkat ${fmt(b)} = ${fmt(r)}`;
+            break;
+            case'root':a=read('a');
+            if(a<0)throw Error('Bilangan harus ≥ 0.');
+            r=Math.sqrt(a);
+            formula=`√${fmt(a)} = ${fmt(r)}`;
+            break;
+            case'remainder':[a,b]=need('a','b');
+            if(!b)throw Error('Pembagi tidak boleh nol.');
+            r=a%b;
+            formula=`${fmt(a)} mod ${fmt(b)} = ${fmt(r)}`;
+            break;
+            case'abs':a=read('a');
+            r=Math.abs(a);
+            formula=`|${fmt(a)}| = ${fmt(r)}`;
+            break;
+            case'factorial':a=read('a');
+            r=fact(a);
+            formula=`${a}! = ${fmt(r)}`;
+            break;
+            case'gcd':[a,b]=need('a','b');
+            r=gcd(a,b);
+            formula=`FPB(${a}, ${b}) = ${r}`;
+            break;
+            case'lcm':[a,b]=need('a','b');
+            r=(a===0||b===0)?0:Math.abs(a*b)/gcd(a,b);
+            formula=`KPK(${a}, ${b}) = ${fmt(r)}`;
+            break;
+            case'rectArea':case'rectPerim':[a,b]=need('a','b');
+            r=id==='rectArea'?a*b:2*(a+b);
+            formula=id==='rectArea'?`L = p × l = ${fmt(a)} × ${fmt(b)}`:`K = 2(p + l) = 2(${fmt(a)} + ${fmt(b)})`;
+            break;
+            case'squareArea':case'squarePerim':a=read('a');
+            r=id==='squareArea'?a*a:4*a;
+            formula=id==='squareArea'?`L = s² = ${fmt(a)}²`:`K = 4s = 4 × ${fmt(a)}`;
+            break;
+            case'triangleArea':[a,b]=need('a','b');
+            r=a*b/2;
+            formula=`L = ½ × alas × tinggi = ½ × ${fmt(a)} × ${fmt(b)}`;
+            break;
+            case'trianglePerim':[a,b,c]=need('a','b','c');
+            r=a+b+c;
+            formula=`K = a + b + c = ${fmt(a)} + ${fmt(b)} + ${fmt(c)}`;
+            break;
+            case'circleArea':case'circlePerim':a=read('a');
+            r=id==='circleArea'?Math.PI*a*a:2*Math.PI*a;
+            formula=id==='circleArea'?`L = πr² = π × ${fmt(a)}²`:`K = 2πr = 2π × ${fmt(a)}`;
+            break;
+            case'trapezoidArea':[a,b,c]=need('a','b','c');
+            r=(a+b)*c/2;
+            formula=`L = ½(a + b)t = ½(${fmt(a)} + ${fmt(b)}) × ${fmt(c)}`;
+            break;
+            case'parallelogramArea':[a,b]=need('a','b');
+            r=a*b;
+            formula=`L = alas × tinggi = ${fmt(a)} × ${fmt(b)}`;
+            break;
+            case'rhombusArea':[a,b]=need('a','b');
+            r=a*b/2;
+            formula=`L = ½ × d₁ × d₂ = ½ × ${fmt(a)} × ${fmt(b)}`;
+            break;
+            case'pythagoras':[a,b]=need('a','b');
+            r=Math.hypot(a,b);
+            formula=`c = √(${fmt(a)}² + ${fmt(b)}²)`;
+            break;
+            case'cubeVol':case'cubeSA':a=read('a');
+            r=id==='cubeVol'?a**3:6*a*a;
+            formula=id==='cubeVol'?`V = s³ = ${fmt(a)}³`:`LP = 6s² = 6 × ${fmt(a)}²`;
+            break;
+            case'cuboidVol':case'cuboidSA':[a,b,c]=need('a','b','c');
+            r=id==='cuboidVol'?a*b*c:2*(a*b+a*c+b*c);
+            formula=id==='cuboidVol'?`V = p × l × t = ${fmt(a)} × ${fmt(b)} × ${fmt(c)}`:`LP = 2(pl + pt + lt)`;
+            break;
+            case'cylinderVol':case'cylinderSA':[a,b]=need('a','b');
+            r=id==='cylinderVol'?Math.PI*a*a*b:2*Math.PI*a*(a+b);
+            formula=id==='cylinderVol'?'V = πr²t': 'LP = 2πr(r + t)';
+            break;
+            case'coneVol':[a,b]=need('a','b');
+            r=Math.PI*a*a*b/3;
+            formula='V = ⅓πr²t';
+            break;
+            case'sphereVol':case'sphereSA':a=read('a');
+            r=id==='sphereVol'?4*Math.PI*a**3/3:4*Math.PI*a*a;
+            formula=id==='sphereVol'?'V = ⁴⁄₃πr³':'LP = 4πr²';
+            break;
+            case'prismVol':[a,b,c]=need('a','b','c');
+            r=a*b*c/2;
+            formula='V = ½ × alas segitiga × tinggi segitiga × tinggi prisma';
+            break;
+            case'linear':[a,b,c]=need('a','b','c');
+            if(!a)throw Error('Koefisien a tidak boleh nol.');
+            r=(c-b)/a;
+            formula=`${a}x + (${b}) = ${c} → x = (${c} − (${b})) / ${a}`;
+            break;
+            case'discriminant':case'quadratic':[a,b,c]=need('a','b','c');
+            if(!a)throw Error('Koefisien a tidak boleh nol.');
+            let D=b*b-4*a*c;
+            if(id==='discriminant') {
+                r=D;
+                formula=`D = b² − 4ac = ${b}² − 4(${a})(${c})`;
+            }
+            else {
+                if(D<0) {
+                    r=`Tidak ada akar real (D = ${fmt(D)})`;
+                    formula=`D = ${fmt(D)} < 0, akar berupa bilangan kompleks`;
+                }
+                else {
+                    let x1=(-b+Math.sqrt(D))/(2*a),x2=(-b-Math.sqrt(D))/(2*a);
+                    r=`x₁ = ${fmt(x1)}; x₂ = ${fmt(x2)}`;
+                    formula=`D = ${fmt(D)}; x = (−b ± √D) / 2a`;
+                }
+            }
+            break;
+            case'slope':[a,b,c,d]=need('a','b','c','d');
+            if(c===a)throw Error('x₁ dan x₂ tidak boleh sama.');
+            r=(d-b)/(c-a);
+            formula=`m = (${fmt(d)} − ${fmt(b)}) / (${fmt(c)} − ${fmt(a)})`;
+            break;
+            case'mean2':[a,b]=need('a','b');
+            r=(a+b)/2;
+            formula=`(${fmt(a)} + ${fmt(b)}) / 2`;
+            break;
+            case'ratio':[a,b]=need('a','b');
+            if(!b)throw Error('Nilai b tidak boleh nol.');
+            r=a/b;
+            formula=`${fmt(a)} : ${fmt(b)} = ${fmt(r)}`;
+            break;
+            case'spldv':[a,b,c,d,e,f]=need('a','b','c','d','e','f');
+            D=a*e-b*d;
+            if(!D)throw Error('SPLDV tidak memiliki satu solusi unik (determinan = 0).');
+            let xx=(c*e-b*f)/D,yy=(a*f-c*d)/D;
+            r=`x = ${fmt(xx)}; y = ${fmt(yy)}`;
+            formula=`D = a₁b₂ − b₁a₂ = ${fmt(D)}`;
+            break;
+            case'sin':case'cos':case'tan':a=read('a');
+            r=Math[id](a*Math.PI/180);
+            formula=`${id}(${fmt(a)}°) = ${fmt(r)}`;
+            break;
+            case'asin':a=read('a');
+            if(Math.abs(a)>1)throw Error('Nilai harus antara −1 dan 1.');
+            r=Math.asin(a)*180/Math.PI;
+            formula=`sin⁻¹(${fmt(a)}) = ${fmt(r)}°`;
+            break;
+            case'lawCos':[a,b,c]=need('a','b','c');
+            let cs=a*a+b*b-2*a*b*Math.cos(c*Math.PI/180);
+            if(cs<0)throw Error('Kombinasi sisi dan sudut tidak valid.');
+            r=Math.sqrt(cs);
+            formula=`c = √(a² + b² − 2ab cos C)`;
+            break;
+            case'degreeRad':a=read('a');
+            r=a*Math.PI/180;
+            formula=`${fmt(a)} × π / 180 = ${fmt(r)} rad`;
+            break;
+            case'radDegree':a=read('a');
+            r=a*180/Math.PI;
+            formula=`${fmt(a)} × 180 / π = ${fmt(r)}°`;
+            break;
+            case'mean':case'median':case'mode':case'range':case'variance':case'stddev': {
+                let ar=list().sort((x,y)=>x-y),n=ar.length,avg=ar.reduce((x,y)=>x+y,0)/n;
+                if(id==='mean') r=avg;
+                else if(id==='median') r=n%2!==0?ar[Math.floor(n/2)]:(ar[n/2-1]+ar[n/2])/2;
+                else if(id==='mode') {
+                    let counts={}; let maxC=0; let mode=[];
+                    ar.forEach(v=>{counts[v]=(counts[v]||0)+1; if(counts[v]>maxC){maxC=counts[v]; mode=[v];} else if(counts[v]===maxC && !mode.includes(v)){mode.push(v);}});
+                    r=maxC===1 && Object.keys(counts).length===ar.length?'Tidak ada modus':mode.join(', ');
+                }
+                else if(id==='range') r=ar[n-1]-ar[0];
+                else if(id==='variance') {
+                    let sumSq=ar.reduce((s,v)=>s+(v-avg)**2,0);
+                    r=sumSq/n;
+                }
+                else if(id==='stddev') {
+                    let sumSq=ar.reduce((s,v)=>s+(v-avg)**2,0);
+                    r=Math.sqrt(sumSq/n);
+                }
+                formula=`Statistika untuk [${ar.join(', ')}]`;
+                break;
+            }
+            case'probability':[a,b]=need('a','b');
+            if(!b)throw Error('Total kemungkinan tidak boleh nol.');
+            r=a/b;
+            formula=`${fmt(a)} / ${fmt(b)} = ${fmt(r)}`;
+            break;
+            case'combination':[a,b]=need('a','b');
+            if(b>a || a<0 || b<0)throw Error('Syarat kombinasi: 0 ≤ r ≤ n.');
+            r=fact(a)/(fact(b)*fact(a-b));
+            formula=`${fmt(a)}C${fmt(b)} = ${fmt(r)}`;
+            break;
+            case'permutation':[a,b]=need('a','b');
+            if(b>a || a<0 || b<0)throw Error('Syarat permutasi: 0 ≤ r ≤ n.');
+            r=fact(a)/fact(a-b);
+            formula=`${fmt(a)}P${fmt(b)} = ${fmt(r)}`;
+            break;
+            case'arithTerm':[a,b,c]=need('a','b','c');
+            r=a+(c-1)*b;
+            formula=`U_${c} = ${fmt(a)} + (${fmt(c)} - 1) × ${fmt(b)} = ${fmt(r)}`;
+            break;
+            case'arithSum':[a,b,c]=need('a','b','c');
+            r=(c/2)*(2*a+(c-1)*b);
+            formula=`S_${c} = (${fmt(c)}/2) × (2(${fmt(a)}) + (${fmt(c)} - 1) × ${fmt(b)}) = ${fmt(r)}`;
+            break;
+            case'geoTerm':[a,b,c]=need('a','b','c');
+            r=a*(b**(c-1));
+            formula=`U_${c} = ${fmt(a)} × ${fmt(b)}^(${fmt(c)} - 1) = ${fmt(r)}`;
+            break;
+            case'geoSum':[a,b,c]=need('a','b','c');
+            if(b===1)r=a*c;
+            else r=a*(b**c - 1)/(b - 1);
+            formula=`S_${c} = ${fmt(a)}(${fmt(b)}^${fmt(c)} - 1) / (${fmt(b)} - 1) = ${fmt(r)}`;
+            break;
+            case'compound':[a,b,c]=need('a','b','c');
+            r=a*((1+b/100)**c);
+            formula=`A = ${fmt(a)}(1 + ${fmt(b)}%)^${fmt(c)} = ${fmt(r)}`;
+            break;
+            case'discount':[a,b]=need('a','b');
+            r=a*(1-b/100);
+            formula=`${fmt(a)} × (1 - ${fmt(b)}%) = ${fmt(r)}`;
+            break;
+            case'tax':[a,b]=need('a','b');
+            r=a*(1+b/100);
+            formula=`${fmt(a)} × (1 + ${fmt(b)}%) = ${fmt(r)}`;
+            break;
+            case'profit':[a,b]=need('a','b');
+            if(!a)throw Error('Harga beli tidak boleh nol.');
+            r=((b-a)/a)*100;
+            formula=`((${fmt(b)} - ${fmt(a)}) / ${fmt(a)}) × 100% = ${fmt(r)}%`;
+            break;
+            case'loss':[a,b]=need('a','b');
+            if(!a)throw Error('Harga beli tidak boleh nol.');
+            r=((a-b)/a)*100;
+            formula=`((${fmt(a)} - ${fmt(b)}) / ${fmt(a)}) × 100% = ${fmt(r)}%`;
+            break;
+            case'simpleInterest':[a,b,c]=need('a','b','c');
+            r=a*(b/100)*c;
+            formula=`Bunga = ${fmt(a)} × ${fmt(b)}% × ${fmt(c)} = ${fmt(r)}`;
+            break;
+            case'markup':[a,b]=need('a','b');
+            if(!a)throw Error('Nilai awal tidak boleh nol.');
+            r=((b-a)/a)*100;
+            formula=`((${fmt(b)} - ${fmt(a)}) / ${fmt(a)}) × 100% = ${fmt(r)}%`;
+            break;
+            case'length':case'mass':case'speed': {
+                a=read('a');
+                let from=$('v_from').value;
+                let to=$('v_to').value;
+                if(id==='length') {
+                    let base=a*units.length[from];
+                    r=base/units.length[to];
+                } else if(id==='mass') {
+                    let base=a*units.mass[from];
+                    r=base/units.mass[to];
+                } else if(id==='speed') {
+                    let base=a*units.speed[from];
+                    r=base/units.speed[to];
+                }
+                formula=`${fmt(a)} ${from} = ${fmt(r)} ${to}`;
+                break;
+            }
+            case'temperature': {
+                a=read('a');
+                let from=$('v_from').value;
+                let to=$('v_to').value;
+                let kelvin;
+                if(from==='C') kelvin=a+273.15;
+                else if(from==='F') kelvin=(a-32)*5/9+273.15;
+                else kelvin=a;
+                
+                if(to==='C') r=kelvin-273.15;
+                else if(to==='F') r=(kelvin-273.15)*9/5+32;
+                else r=kelvin;
+                formula=`${fmt(a)}°${from} = ${fmt(r)}°${to}`;
+                break;
+            }
+            default:
+                r=0;
+                formula=`—`;
+        }
+        return {value:fmt(r),formula,steps};
+    }
+
+    $('calculate').addEventListener('click',()=> {
+        try {
+            const {value,formula,steps}=calc();
+            $('value').textContent=value;
+            $('formulaText').textContent=formula;
+            $('result').classList.remove('hidden');
+            history.unshift({title:titles[current()[0]]||current()[1],formula,value});
+            if(history.length>10)history.pop();
+            renderHistory();
+        } catch(e) {
+            alert(e.message);
+        }
+    });
+    $('reset').addEventListener('click',()=> {
+        renderFields();
+        $('result').classList.add('hidden');
+    });
+    function renderHistory() {
+        if(history.length===0) {
+            $('history').innerHTML=`<div class="empty">Hasil hitunganmu akan muncul di sini.</div>`;
+            return;
+        }
+        $('history').innerHTML=history.map(h=>`<div class="historyitem"><span>${h.title} (${h.formula})</span><strong>${h.value}</strong></div>`).join('');
+    }
+    renderNav();
+    </script>
+  </body>
+</html>
