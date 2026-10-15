@@ -1149,9 +1149,17 @@
         <section class="result-box hidden" id="resultBox" aria-live="polite">
           <div class="result-header">
             <span class="result-tag">✅ HASIL PERHITUNGAN</span>
-            <button class="copy-btn" id="copyBtn">
-              <span>📋 Salin</span>
-            </button>
+            <div style="display:flex;gap:6px;flex-wrap:wrap;">
+              <button class="copy-btn" id="speakBtn" title="Dengarkan via suara">
+                <span>🔊 Dengar</span>
+              </button>
+              <button class="copy-btn" id="shareBtn" title="Bagikan jawaban">
+                <span>📤 Bagikan</span>
+              </button>
+              <button class="copy-btn" id="copyBtn" title="Salin jawaban">
+                <span>📋 Salin</span>
+              </button>
+            </div>
           </div>
           <div class="result-value-display" id="resultValue">—</div>
           <div class="result-formula-display" id="resultFormula"></div>
@@ -1700,9 +1708,9 @@
           r = a + b;
           formula = `${fmt(a)} + ${fmt(b)} = ${fmt(r)}`;
           steps = [
-            `Tulis rumus penjumlahan: a + b`,
-            `Masukkan angka: ${fmt(a)} + ${fmt(b)}`,
-            `Jumlahkan kedua nilai: didapatkan hasil ${fmt(r)}`
+            `Rumus Penjumlahan: a + b`,
+            `Substitusi angka: ${fmt(a)} + ${fmt(b)}`,
+            `Hasil penjumlahan: ${fmt(r)}`
           ];
           break;
 
@@ -1711,9 +1719,9 @@
           r = a - b;
           formula = `${fmt(a)} − ${fmt(b)} = ${fmt(r)}`;
           steps = [
-            `Tulis rumus pengurangan: a − b`,
-            `Masukkan angka: ${fmt(a)} − ${fmt(b)}`,
-            `Kurangkan kedua nilai: didapatkan hasil ${fmt(r)}`
+            `Rumus Pengurangan: a − b`,
+            `Substitusi angka: ${fmt(a)} − ${fmt(b)}`,
+            `Hasil pengurangan: ${fmt(r)}`
           ];
           break;
 
@@ -1722,9 +1730,9 @@
           r = a * b;
           formula = `${fmt(a)} × ${fmt(b)} = ${fmt(r)}`;
           steps = [
-            `Tulis rumus perkalian: a × b`,
-            `Masukkan angka: ${fmt(a)} × ${fmt(b)}`,
-            `Kalikan kedua nilai: didapatkan hasil ${fmt(r)}`
+            `Rumus Perkalian: a × b`,
+            `Substitusi angka: ${fmt(a)} × ${fmt(b)}`,
+            `Hasil perkalian: ${fmt(r)}`
           ];
           break;
 
@@ -1734,9 +1742,9 @@
           r = a / b;
           formula = `${fmt(a)} ÷ ${fmt(b)} = ${fmt(r)}`;
           steps = [
-            `Tulis rumus pembagian: a ÷ b`,
-            `Masukkan angka: ${fmt(a)} ÷ ${fmt(b)}`,
-            `Bagi nilai pembilang dengan penyebut: didapatkan hasil ${fmt(r)}`
+            `Rumus Pembagian: a ÷ b`,
+            `Substitusi angka: ${fmt(a)} ÷ ${fmt(b)}`,
+            `Hasil pembagian: ${fmt(r)}`
           ];
           break;
 
@@ -1745,9 +1753,9 @@
           r = (a / 100) * b;
           formula = `${fmt(a)}% × ${fmt(b)} = ${fmt(r)}`;
           steps = [
-            `Ubah persentase ke bentuk pecahan desimal: ${fmt(a)}% = ${fmt(a)} / 100 = ${fmt(a / 100)}`,
-            `Kalikan dengan nilai total: ${fmt(a / 100)} × ${fmt(b)}`,
-            `Hasil akhir persentase diperoleh: ${fmt(r)}`
+            `Ubah persentase ke desimal: ${fmt(a)}% = ${fmt(a)} / 100 = ${fmt(a / 100)}`,
+            `Kalikan dengan total: ${fmt(a / 100)} × ${fmt(b)}`,
+            `Hasil persentase: ${fmt(r)}`
           ];
           break;
 
@@ -1756,8 +1764,8 @@
           r = a ** b;
           formula = `${fmt(a)}^${fmt(b)} = ${fmt(r)}`;
           steps = [
-            `Rumus perpangkatan: aᵇ (bilangan ${fmt(a)} dikalikan sebanyak ${fmt(b)} kali)`,
-            `Hitung nilai pangkat: ${fmt(a)}^${fmt(b)}`,
+            `Rumus Perpangkatan: aᵇ (${fmt(a)} dipangkatkan ${fmt(b)})`,
+            `Hitung perkalian berulang: ${fmt(a)}^${fmt(b)}`,
             `Hasil perpangkatan: ${fmt(r)}`
           ];
           break;
@@ -1768,9 +1776,9 @@
           r = Math.sqrt(a);
           formula = `√${fmt(a)} = ${fmt(r)}`;
           steps = [
-            `Tulis rumus akar kuadrat: √a`,
+            `Rumus Akar Kuadrat: √a`,
             `Cari bilangan yang jika dikuadratkan menghasilkan ${fmt(a)}`,
-            `Hasil penarikan akar kuadrat: ${fmt(r)}`
+            `Hasil penarikan akar: ${fmt(r)}`
           ];
           break;
 
@@ -1781,7 +1789,7 @@
           formula = `${fmt(a)} mod ${fmt(b)} = ${fmt(r)}`;
           steps = [
             `Bagi ${fmt(a)} dengan ${fmt(b)}: hasil bulat = ${Math.trunc(a / b)}`,
-            `Hitung kelipatan terbesar: ${Math.trunc(a / b)} × ${fmt(b)} = ${fmt(Math.trunc(a / b) * b)}`,
+            `Hasil kali kelipatan: ${Math.trunc(a / b)} × ${fmt(b)} = ${fmt(Math.trunc(a / b) * b)}`,
             `Sisa pembagian: ${fmt(a)} − ${fmt(Math.trunc(a / b) * b)} = ${fmt(r)}`
           ];
           break;
@@ -1791,7 +1799,7 @@
           r = Math.abs(a);
           formula = `|${fmt(a)}| = ${fmt(r)}`;
           steps = [
-            `Nilai mutlak mengubah bilangan negatif menjadi positif, dan mempertahankan bilangan positif`,
+            `Nilai mutlak mengubah nilai negatif menjadi positif`,
             `|${fmt(a)}| = ${fmt(r)}`
           ];
           break;
@@ -1801,7 +1809,7 @@
           r = fact(a);
           formula = `${a}! = ${fmt(r)}`;
           steps = [
-            `Definisi faktorial n! = n × (n−1) × ... × 1`,
+            `Definisi Faktorial: n! = n × (n−1) × ... × 1`,
             `Hitung perkalian beruntun: ${a}!`,
             `Hasil nilai faktorial: ${fmt(r)}`
           ];
@@ -1812,8 +1820,8 @@
           r = gcd(a, b);
           formula = `FPB(${fmt(a)}, ${fmt(b)}) = ${r}`;
           steps = [
-            `Tentukan faktor pembagi terbesar dari ${fmt(a)} dan ${fmt(b)}`,
-            `Gunakan algoritma Euclidean: didapatkan FPB = ${r}`
+            `Faktor pembagi persekutuan terbesar dari ${fmt(a)} dan ${fmt(b)}`,
+            `Algoritma Euclidean: didapatkan FPB = ${r}`
           ];
           break;
 
@@ -1822,8 +1830,8 @@
           r = (a === 0 || b === 0) ? 0 : Math.abs(a * b) / gcd(a, b);
           formula = `KPK(${fmt(a)}, ${fmt(b)}) = ${fmt(r)}`;
           steps = [
-            `Rumus hubungan KPK dan FPB: KPK(a, b) = (|a × b|) / FPB(a, b)`,
-            `Hitung perkalian: ${fmt(a)} × ${fmt(b)} = ${fmt(a * b)}`,
+            `Rumus KPK: KPK(a, b) = (|a × b|) / FPB(a, b)`,
+            `Hasil kali: ${fmt(a)} × ${fmt(b)} = ${fmt(a * b)}`,
             `Bagi dengan FPB (${gcd(a, b)}): didapatkan KPK = ${fmt(r)}`
           ];
           break;
@@ -1844,7 +1852,7 @@
           r = 2 * (a + b);
           formula = `K = 2(p + l) = 2(${fmt(a)} + ${fmt(b)}) = ${fmt(r)}`;
           steps = [
-            `Rumus Keliling Persegi Panjang: K = 2 × (panjang + lebar)`,
+            `Rumus Keliling Persegi Panjang: K = 2 × (p + l)`,
             `Jumlahkan panjang dan lebar: ${fmt(a)} + ${fmt(b)} = ${fmt(a + b)}`,
             `Kalikan 2: 2 × ${fmt(a + b)} = ${fmt(r)} satuan panjang`
           ];
@@ -1856,7 +1864,6 @@
           formula = `L = s² = ${fmt(a)}² = ${fmt(r)}`;
           steps = [
             `Rumus Luas Persegi: L = sisi × sisi (s²)`,
-            `Substitusi nilai: s = ${fmt(a)}`,
             `L = ${fmt(a)} × ${fmt(a)} = ${fmt(r)}`
           ];
           break;
@@ -1878,7 +1885,7 @@
           steps = [
             `Rumus Luas Segitiga: L = ½ × alas × tinggi`,
             `Kalikan alas dan tinggi: ${fmt(a)} × ${fmt(b)} = ${fmt(a * b)}`,
-            `Bagi dua: ${fmt(a * b)} ÷ 2 = ${fmt(r)}`
+            `Bagi 2: ${fmt(a * b)} ÷ 2 = ${fmt(r)}`
           ];
           break;
 
@@ -1887,7 +1894,7 @@
           r = a + b + c;
           formula = `K = a + b + c = ${fmt(a)} + ${fmt(b)} + ${fmt(c)} = ${fmt(r)}`;
           steps = [
-            `Rumus Keliling Segitiga: K = sisi a + sisi b + sisi c`,
+            `Rumus Keliling Segitiga: K = a + b + c`,
             `Jumlahkan ketiga sisi: ${fmt(a)} + ${fmt(b)} + ${fmt(c)} = ${fmt(r)}`
           ];
           break;
@@ -1898,7 +1905,7 @@
           formula = `L = πr² = π × ${fmt(a)}² = ${fmt(r)}`;
           steps = [
             `Rumus Luas Lingkaran: L = π × r² (π ≈ 3,14159)`,
-            `Kuadratkan jari-jari: r² = ${fmt(a)}² = ${fmt(a * a)}`,
+            `Kuadratkan jari-jari: ${fmt(a)}² = ${fmt(a * a)}`,
             `Kalikan dengan π: 3,14159 × ${fmt(a * a)} = ${fmt(r)}`
           ];
           break;
@@ -1913,15 +1920,412 @@
           ];
           break;
 
+        case 'trapezoidArea':
+          [a, b, c] = need('a', 'b', 'c');
+          r = ((a + b) * c) / 2;
+          formula = `L = ½(a + b)t = ½(${fmt(a)} + ${fmt(b)}) × ${fmt(c)} = ${fmt(r)}`;
+          steps = [
+            `Rumus Luas Trapesium: L = ½ × (sisi sejajar a + sisi sejajar b) × tinggi`,
+            `Jumlahkan sisi sejajar: ${fmt(a)} + ${fmt(b)} = ${fmt(a + b)}`,
+            `Kalikan tinggi dan bagi 2: (${fmt(a + b)} × ${fmt(c)}) ÷ 2 = ${fmt(r)}`
+          ];
+          break;
+
+        case 'parallelogramArea':
+          [a, b] = need('a', 'b');
+          r = a * b;
+          formula = `L = a × t = ${fmt(a)} × ${fmt(b)} = ${fmt(r)}`;
+          steps = [
+            `Rumus Luas Jajar Genjang: L = alas × tinggi`,
+            `Kalikan alas dan tinggi: ${fmt(a)} × ${fmt(b)} = ${fmt(r)}`
+          ];
+          break;
+
+        case 'rhombusArea':
+          [a, b] = need('a', 'b');
+          r = (a * b) / 2;
+          formula = `L = ½ × d₁ × d₂ = ½ × ${fmt(a)} × ${fmt(b)} = ${fmt(r)}`;
+          steps = [
+            `Rumus Luas Belah Ketupat: L = ½ × diagonal 1 × diagonal 2`,
+            `Kalikan kedua diagonal: ${fmt(a)} × ${fmt(b)} = ${fmt(a * b)}`,
+            `Bagi 2: ${fmt(a * b)} ÷ 2 = ${fmt(r)}`
+          ];
+          break;
+
         case 'pythagoras':
           [a, b] = need('a', 'b');
           r = Math.hypot(a, b);
           formula = `c = √(a² + b²) = √(${fmt(a)}² + ${fmt(b)}²) = ${fmt(r)}`;
           steps = [
-            `Teorema Pythagoras: kuadrat sisi miring sama dengan jumlah kuadrat sisi tegak (c = √(a² + b²))`,
+            `Teorema Pythagoras: sisi miring c = √(a² + b²)`,
             `Kuadratkan kedua sisi: a² = ${fmt(a * a)}, b² = ${fmt(b * b)}`,
-            `Jumlahkan nilai kuadrat: ${fmt(a * a)} + ${fmt(b * b)} = ${fmt(a * a + b * b)}`,
+            `Jumlahkan kuadrat: ${fmt(a * a)} + ${fmt(b * b)} = ${fmt(a * a + b * b)}`,
             `Tarik akar kuadrat: √${fmt(a * a + b * b)} = ${fmt(r)}`
+          ];
+          break;
+
+        case 'cubeVol':
+          a = readVal('a');
+          r = a ** 3;
+          formula = `V = s³ = ${fmt(a)}³ = ${fmt(r)}`;
+          steps = [
+            `Rumus Volume Kubus: V = sisi × sisi × sisi (s³)`,
+            `V = ${fmt(a)}³ = ${fmt(r)}`
+          ];
+          break;
+
+        case 'cubeSA':
+          a = readVal('a');
+          r = 6 * a * a;
+          formula = `LP = 6s² = 6 × ${fmt(a)}² = ${fmt(r)}`;
+          steps = [
+            `Rumus Luas Permukaan Kubus: LP = 6 × sisi²`,
+            `Luas 1 sisi: ${fmt(a)}² = ${fmt(a * a)}`,
+            `Kalikan 6 sisi: 6 × ${fmt(a * a)} = ${fmt(r)}`
+          ];
+          break;
+
+        case 'cuboidVol':
+          [a, b, c] = need('a', 'b', 'c');
+          r = a * b * c;
+          formula = `V = p × l × t = ${fmt(a)} × ${fmt(b)} × ${fmt(c)} = ${fmt(r)}`;
+          steps = [
+            `Rumus Volume Balok: V = panjang × lebar × tinggi`,
+            `V = ${fmt(a)} × ${fmt(b)} × ${fmt(c)} = ${fmt(r)}`
+          ];
+          break;
+
+        case 'cuboidSA':
+          [a, b, c] = need('a', 'b', 'c');
+          r = 2 * (a * b + a * c + b * c);
+          formula = `LP = 2(pl + pt + lt) = ${fmt(r)}`;
+          steps = [
+            `Rumus Luas Permukaan Balok: LP = 2 × (p×l + p×t + l×t)`,
+            `Hitung sisi: pl = ${fmt(a*b)}, pt = ${fmt(a*c)}, lt = ${fmt(b*c)}`,
+            `Total: 2 × (${fmt(a*b + a*c + b*c)}) = ${fmt(r)}`
+          ];
+          break;
+
+        case 'cylinderVol':
+          [a, b] = need('a', 'b');
+          r = Math.PI * a * a * b;
+          formula = `V = πr²t = π × ${fmt(a)}² × ${fmt(b)} = ${fmt(r)}`;
+          steps = [
+            `Rumus Volume Tabung: V = πr²t`,
+            `Luas alas: π × ${fmt(a)}² = ${fmt(Math.PI * a * a)}`,
+            `Kalikan tinggi: ${fmt(Math.PI * a * a)} × ${fmt(b)} = ${fmt(r)}`
+          ];
+          break;
+
+        case 'cylinderSA':
+          [a, b] = need('a', 'b');
+          r = 2 * Math.PI * a * (a + b);
+          formula = `LP = 2πr(r + t) = 2π(${fmt(a)})(${fmt(a)} + ${fmt(b)}) = ${fmt(r)}`;
+          steps = [
+            `Rumus Luas Permukaan Tabung: LP = 2πr(r + t)`,
+            `Jumlahkan r dan t: ${fmt(a)} + ${fmt(b)} = ${fmt(a + b)}`,
+            `Kalikan dengan 2πr: 2π × ${fmt(a)} × ${fmt(a + b)} = ${fmt(r)}`
+          ];
+          break;
+
+        case 'coneVol':
+          [a, b] = need('a', 'b');
+          r = (Math.PI * a * a * b) / 3;
+          formula = `V = ⅓πr²t = ⅓ × π × ${fmt(a)}² × ${fmt(b)} = ${fmt(r)}`;
+          steps = [
+            `Rumus Volume Kerucut: V = ⅓ × luas alas × tinggi (⅓πr²t)`,
+            `Volume tabung seukuran: π × ${fmt(a*a)} × ${fmt(b)} = ${fmt(Math.PI * a * a * b)}`,
+            `Bagi 3: ${fmt(Math.PI * a * a * b)} ÷ 3 = ${fmt(r)}`
+          ];
+          break;
+
+        case 'sphereVol':
+          a = readVal('a');
+          r = (4 / 3) * Math.PI * (a ** 3);
+          formula = `V = ⁴⁄₃πr³ = ⁴⁄₃ × π × ${fmt(a)}³ = ${fmt(r)}`;
+          steps = [
+            `Rumus Volume Bola: V = ⁴⁄₃ × π × r³`,
+            `Pangkat tiga jari-jari: ${fmt(a)}³ = ${fmt(a ** 3)}`,
+            `Kalikan dengan ⁴⁄₃π: didapatkan ${fmt(r)}`
+          ];
+          break;
+
+        case 'sphereSA':
+          a = readVal('a');
+          r = 4 * Math.PI * a * a;
+          formula = `LP = 4πr² = 4 × π × ${fmt(a)}² = ${fmt(r)}`;
+          steps = [
+            `Rumus Luas Permukaan Bola: LP = 4 × π × r²`,
+            `Kuadratkan jari-jari: ${fmt(a)}² = ${fmt(a * a)}`,
+            `Kalikan dengan 4π: 4 × 3,14159 × ${fmt(a * a)} = ${fmt(r)}`
+          ];
+          break;
+
+        case 'prismVol':
+          [a, b, c] = need('a', 'b', 'c');
+          r = (a * b * c) / 2;
+          formula = `V = (½ × a × t) × T = ½ × ${fmt(a)} × ${fmt(b)} × ${fmt(c)} = ${fmt(r)}`;
+          steps = [
+            `Luas alas segitiga: ½ × ${fmt(a)} × ${fmt(b)} = ${fmt((a * b) / 2)}`,
+            `Kalikan dengan tinggi prisma: ${fmt((a * b) / 2)} × ${fmt(c)} = ${fmt(r)}`
+          ];
+          break;
+
+        case 'linear':
+          [a, b, c] = need('a', 'b', 'c');
+          if (a === 0) throw new Error('Koefisien a tidak boleh nol.');
+          r = (c - b) / a;
+          formula = `${a}x + (${b}) = ${c}  →  x = ${fmt(r)}`;
+          steps = [
+            `Bentuk persamaan: ${a}x + ${b} = ${c}`,
+            `Pindahkan konstanta: ${a}x = ${c} − (${b}) = ${fmt(c - b)}`,
+            `Bagi dengan a (${a}): x = ${fmt(c - b)} / ${a} = ${fmt(r)}`
+          ];
+          break;
+
+        case 'quadratic':
+        case 'discriminant':
+          [a, b, c] = need('a', 'b', 'c');
+          if (a === 0) throw new Error('Koefisien a tidak boleh nol.');
+          const D = b * b - 4 * a * c;
+          if (id === 'discriminant') {
+            r = D;
+            formula = `D = b² − 4ac = ${fmt(b)}² − 4(${fmt(a)})(${fmt(c)}) = ${fmt(r)}`;
+            steps = [
+              `Rumus Diskriminan: D = b² − 4ac`,
+              `Hitung b²: ${fmt(b)}² = ${fmt(b * b)}`,
+              `Hitung 4ac: 4 × ${fmt(a)} × ${fmt(c)} = ${fmt(4 * a * c)}`,
+              `D = ${fmt(b * b)} − ${fmt(4 * a * c)} = ${fmt(D)} (${D > 0 ? 'D > 0: 2 akar real berbeda' : D === 0 ? 'D = 0: 2 akar kembar' : 'D < 0: akar kompleks'})`
+            ];
+          } else {
+            if (D < 0) {
+              r = `Tidak ada akar real (D = ${fmt(D)} < 0)`;
+              formula = `Akar berupa bilangan kompleks`;
+              steps = [
+                `Hitung Diskriminan: D = b² − 4ac = ${fmt(D)}`,
+                `Karena D bernilai negatif (< 0), grafik tidak memotong sumbu X dan tidak memiliki akar real.`
+              ];
+            } else {
+              const x1 = (-b + Math.sqrt(D)) / (2 * a);
+              const x2 = (-b - Math.sqrt(D)) / (2 * a);
+              r = `x₁ = ${fmt(x1)} ; x₂ = ${fmt(x2)}`;
+              formula = `x = (−b ± √D) / 2a`;
+              steps = [
+                `Hitung Diskriminan: D = ${fmt(D)}`,
+                `Gunakan rumus abc: x = (−(${fmt(b)}) ± √${fmt(D)}) / (2 × ${fmt(a)})`,
+                `x₁ = (${fmt(-b)} + ${fmt(Math.sqrt(D))}) / ${fmt(2 * a)} = ${fmt(x1)}`,
+                `x₂ = (${fmt(-b)} − ${fmt(Math.sqrt(D))}) / ${fmt(2 * a)} = ${fmt(x2)}`
+              ];
+            }
+          }
+          break;
+
+        case 'slope':
+          [a, b, c, d] = need('a', 'b', 'c', 'd');
+          if (c === a) throw new Error('Titik x₁ dan x₂ tidak boleh sama (garis vertikal, gradien tak terhingga).');
+          r = (d - b) / (c - a);
+          formula = `m = (y₂ − y₁) / (x₂ − x₁) = (${fmt(d)} − ${fmt(b)}) / (${fmt(c)} − ${fmt(a)}) = ${fmt(r)}`;
+          steps = [
+            `Rumus Gradien Garis: m = Δy / Δx = (y₂ − y₁) / (x₂ − x₁)`,
+            `Selisih sumbu y: ${fmt(d)} − ${fmt(b)} = ${fmt(d - b)}`,
+            `Selisih sumbu x: ${fmt(c)} − ${fmt(a)} = ${fmt(c - a)}`,
+            `Bagi selisih y dengan x: ${fmt(d - b)} / ${fmt(c - a)} = ${fmt(r)}`
+          ];
+          break;
+
+        case 'mean2':
+          [a, b] = need('a', 'b');
+          r = (a + b) / 2;
+          formula = `(${fmt(a)} + ${fmt(b)}) / 2 = ${fmt(r)}`;
+          steps = [
+            `Jumlahkan kedua angka: ${fmt(a)} + ${fmt(b)} = ${fmt(a + b)}`,
+            `Bagi dua: ${fmt(a + b)} ÷ 2 = ${fmt(r)}`
+          ];
+          break;
+
+        case 'ratio':
+          [a, b] = need('a', 'b');
+          if (b === 0) throw new Error('Nilai b tidak boleh nol.');
+          r = a / b;
+          const gRatio = gcd(a, b);
+          formula = `${fmt(a)} : ${fmt(b)} = ${fmt(a / gRatio)} : ${fmt(b / gRatio)} (Nilai: ${fmt(r)})`;
+          steps = [
+            `Perbandingan awal: ${fmt(a)} : ${fmt(b)}`,
+            `Cari FPB penyederhanaan: FPB = ${gRatio}`,
+            `Bentuk paling sederhana: ${fmt(a / gRatio)} : ${fmt(b / gRatio)}`
+          ];
+          break;
+
+        case 'spldv':
+          [a, b, c, d, e, f] = need('a', 'b', 'c', 'd', 'e', 'f');
+          const det = a * e - b * d;
+          if (det === 0) throw new Error('Sistem persamaan tidak memiliki satu solusi unik (determinan D = 0).');
+          const solX = (c * e - b * f) / det;
+          const solY = (a * f - c * d) / det;
+          r = `x = ${fmt(solX)} ; y = ${fmt(solY)}`;
+          formula = `D = ${fmt(det)} ; Dx = ${fmt(c*e - b*f)} ; Dy = ${fmt(a*f - c*d)}`;
+          steps = [
+            `Persamaan 1: ${a}x + ${b}y = ${c}`,
+            `Persamaan 2: ${d}x + ${e}y = ${f}`,
+            `Determinan D = (${a}×${e}) − (${b}×${d}) = ${fmt(det)}`,
+            `Determinan Dx = (${c}×${e}) − (${b}×${f}) = ${fmt(c*e - b*f)}`,
+            `Determinan Dy = (${a}×${f}) − (${c}×${d}) = ${fmt(a*f - c*d)}`,
+            `Nilai x = Dx / D = ${fmt(solX)}`,
+            `Nilai y = Dy / D = ${fmt(solY)}`
+          ];
+          break;
+
+        case 'sin':
+        case 'cos':
+        case 'tan':
+          a = readVal('a');
+          r = Math[id](a * Math.PI / 180);
+          formula = `${id}(${fmt(a)}°) = ${fmt(r)}`;
+          steps = [
+            `Konversi sudut ke radian: ${fmt(a)}° × (π / 180) = ${fmt(a * Math.PI / 180)} rad`,
+            `Hitung nilai ${id}: didapatkan hasil ${fmt(r)}`
+          ];
+          break;
+
+        case 'asin':
+          a = readVal('a');
+          if (Math.abs(a) > 1) throw new Error('Nilai arcsin harus berada pada rentang -1 sampai 1.');
+          r = Math.asin(a) * 180 / Math.PI;
+          formula = `sin⁻¹(${fmt(a)}) = ${fmt(r)}°`;
+          steps = [
+            `Cari sudut yang nilai sinusnya = ${fmt(a)}`,
+            `Sudut dalam derajat: ${fmt(r)}°`
+          ];
+          break;
+
+        case 'lawCos':
+          [a, b, c] = need('a', 'b', 'c');
+          const cs = a * a + b * b - 2 * a * b * Math.cos(c * Math.PI / 180);
+          if (cs < 0) throw new Error('Kombinasi panjang sisi dan sudut tidak membentuk segitiga valid.');
+          r = Math.sqrt(cs);
+          formula = `c = √(a² + b² − 2ab cos C) = ${fmt(r)}`;
+          steps = [
+            `Aturan Cosinus: c² = a² + b² − 2ab cos(C)`,
+            `Jumlah kuadrat: ${fmt(a*a)} + ${fmt(b*b)} = ${fmt(a*a + b*b)}`,
+            `Pengurang 2ab cos(C): ${fmt(2 * a * b * Math.cos(c * Math.PI / 180))}`,
+            `c = √${fmt(cs)} = ${fmt(r)}`
+          ];
+          break;
+
+        case 'degreeRad':
+          a = readVal('a');
+          r = a * Math.PI / 180;
+          formula = `${fmt(a)}° = ${fmt(r)} rad`;
+          steps = [
+            `Rumus: Radian = Derajat × (π / 180)`,
+            `${fmt(a)} × (3,14159 / 180) = ${fmt(r)} rad`
+          ];
+          break;
+
+        case 'radDegree':
+          a = readVal('a');
+          r = a * 180 / Math.PI;
+          formula = `${fmt(a)} rad = ${fmt(r)}°`;
+          steps = [
+            `Rumus: Derajat = Radian × (180 / π)`,
+            `${fmt(a)} × (180 / 3,14159) = ${fmt(r)}°`
+          ];
+          break;
+
+        case 'probability':
+          [a, b] = need('a', 'b');
+          if (b === 0) throw new Error('Ruang sampel total n(S) tidak boleh nol.');
+          if (a > b || a < 0 || b < 0) throw new Error('Banyak kejadian n(A) tidak boleh negatif atau melebihi ruang sampel n(S).');
+          r = a / b;
+          formula = `P(A) = n(A) / n(S) = ${fmt(a)} / ${fmt(b)} = ${fmt(r)} (${fmt(r * 100)}%)`;
+          steps = [
+            `Rumus Peluang: P(A) = kejadian n(A) ÷ ruang sampel n(S)`,
+            `Hitung: ${fmt(a)} ÷ ${fmt(b)} = ${fmt(r)}`,
+            `Bentuk persentase: ${fmt(r * 100)}%`
+          ];
+          break;
+
+        case 'combination':
+          [a, b] = need('a', 'b');
+          if (b > a || a < 0 || b < 0) throw new Error('Syarat kombinasi: 0 ≤ r ≤ n.');
+          r = fact(a) / (fact(b) * fact(a - b));
+          formula = `${fmt(a)}C${fmt(b)} = ${fmt(r)}`;
+          steps = [
+            `Rumus Kombinasi: nCr = n! / (r! × (n−r)!)`,
+            `Substitusi: ${a}! / (${b}! × ${a - b}!)`,
+            `Hasil kombinasi: ${fmt(r)}`
+          ];
+          break;
+
+        case 'permutation':
+          [a, b] = need('a', 'b');
+          if (b > a || a < 0 || b < 0) throw new Error('Syarat permutasi: 0 ≤ r ≤ n.');
+          r = fact(a) / fact(a - b);
+          formula = `${fmt(a)}P${fmt(b)} = ${fmt(r)}`;
+          steps = [
+            `Rumus Permutasi: nPr = n! / (n−r)!`,
+            `Substitusi: ${a}! / ${a - b}!`,
+            `Hasil permutasi: ${fmt(r)}`
+          ];
+          break;
+
+        case 'arithTerm':
+          [a, b, c] = need('a', 'b', 'c');
+          r = a + (c - 1) * b;
+          formula = `U${c} = a + (n−1)b = ${fmt(a)} + (${fmt(c)}−1)(${fmt(b)}) = ${fmt(r)}`;
+          steps = [
+            `Rumus Suku ke-n Aritmetika: Uₙ = a + (n−1)b`,
+            `Hitung n−1: ${fmt(c)} − 1 = ${fmt(c - 1)}`,
+            `Kalikan beda: ${fmt(c - 1)} × ${fmt(b)} = ${fmt((c - 1) * b)}`,
+            `Tambahkan a: ${fmt(a)} + ${fmt((c - 1) * b)} = ${fmt(r)}`
+          ];
+          break;
+
+        case 'arithSum':
+          [a, b, c] = need('a', 'b', 'c');
+          r = (c / 2) * (2 * a + (c - 1) * b);
+          formula = `S${c} = n/2(2a + (n−1)b) = ${fmt(r)}`;
+          steps = [
+            `Rumus Jumlah Deret Aritmetika: Sₙ = n/2 × (2a + (n−1)b)`,
+            `Hitung 2a: 2 × ${fmt(a)} = ${fmt(2 * a)}`,
+            `Hitung (n−1)b: (${fmt(c)}−1) × ${fmt(b)} = ${fmt((c - 1) * b)}`,
+            `Jumlahkan: ${fmt(2 * a)} + ${fmt((c - 1) * b)} = ${fmt(2 * a + (c - 1) * b)}`,
+            `Kalikan n/2: (${fmt(c)}/2) × ${fmt(2 * a + (c - 1) * b)} = ${fmt(r)}`
+          ];
+          break;
+
+        case 'geoTerm':
+          [a, b, c] = need('a', 'b', 'c');
+          r = a * (b ** (c - 1));
+          formula = `U${c} = a × rⁿ⁻¹ = ${fmt(a)} × ${fmt(b)}^(${fmt(c)}−1) = ${fmt(r)}`;
+          steps = [
+            `Rumus Suku ke-n Geometri: Uₙ = a × rⁿ⁻¹`,
+            `Hitung perpangkatan rasio: ${fmt(b)}^${fmt(c - 1)} = ${fmt(b ** (c - 1))}`,
+            `Kalikan dengan a: ${fmt(a)} × ${fmt(b ** (c - 1))} = ${fmt(r)}`
+          ];
+          break;
+
+        case 'geoSum':
+          [a, b, c] = need('a', 'b', 'c');
+          if (b === 1) r = a * c;
+          else r = a * (b ** c - 1) / (b - 1);
+          formula = `S${c} = a(rⁿ − 1)/(r − 1) = ${fmt(r)}`;
+          steps = [
+            `Rumus Jumlah Deret Geometri: Sₙ = a(rⁿ − 1)/(r − 1)`,
+            `Hitung rⁿ: ${fmt(b)}^${fmt(c)} = ${fmt(b ** c)}`,
+            `Hitung pembilang: ${fmt(a)} × (${fmt(b ** c - 1)}) = ${fmt(a * (b ** c - 1))}`,
+            `Bagi dengan (r − 1): ${fmt(a * (b ** c - 1))} ÷ ${fmt(b - 1)} = ${fmt(r)}`
+          ];
+          break;
+
+        case 'compound':
+          [a, b, c] = need('a', 'b', 'c');
+          r = a * ((1 + b / 100) ** c);
+          formula = `A = P(1 + r)ⁿ = Rp ${fmt(r)}`;
+          steps = [
+            `Rumus Bunga Majemuk: Modal Akhir = Modal Awal × (1 + suku bunga)ⁿ`,
+            `Faktor pengali: (1 + ${fmt(b)}%)^${fmt(c)} = ${fmt((1 + b / 100) ** c)}`,
+            `Total modal akhir: Rp ${fmt(a)} × ${fmt((1 + b / 100) ** c)} = Rp ${fmt(r)}`
           ];
           break;
 
@@ -1956,8 +2360,8 @@
           formula = `Untung = ((${fmt(b)} − ${fmt(a)}) / ${fmt(a)}) × 100% = ${fmt(r)}%`;
           steps = [
             `Hitung besar keuntungan: Rp ${fmt(b)} − Rp ${fmt(a)} = Rp ${fmt(b - a)}`,
-            `Bagi dengan modal beli: Rp ${fmt(b - a)} / Rp ${fmt(a)} = ${fmt((b - a) / a)}`,
-            `Ubah ke persentase: ${fmt((b - a) / a)} × 100% = ${fmt(r)}%`
+            `Bagi modal beli: Rp ${fmt(b - a)} / Rp ${fmt(a)} = ${fmt((b - a) / a)}`,
+            `Persentase keuntungan: ${fmt((b - a) / a)} × 100% = ${fmt(r)}%`
           ];
           break;
 
@@ -1968,8 +2372,32 @@
           formula = `Rugi = ((${fmt(a)} − ${fmt(b)}) / ${fmt(a)}) × 100% = ${fmt(r)}%`;
           steps = [
             `Hitung besar kerugian: Rp ${fmt(a)} − Rp ${fmt(b)} = Rp ${fmt(a - b)}`,
-            `Bagi dengan modal beli: Rp ${fmt(a - b)} / Rp ${fmt(a)} = ${fmt((a - b) / a)}`,
-            `Ubah ke persentase: ${fmt((a - b) / a)} × 100% = ${fmt(r)}%`
+            `Bagi modal beli: Rp ${fmt(a - b)} / Rp ${fmt(a)} = ${fmt((a - b) / a)}`,
+            `Persentase kerugian: ${fmt((a - b) / a)} × 100% = ${fmt(r)}%`
+          ];
+          break;
+
+        case 'simpleInterest':
+          [a, b, c] = need('a', 'b', 'c');
+          const bunga = a * (b / 100) * c;
+          r = a + bunga;
+          formula = `Total = Rp ${fmt(r)} (Bunga: Rp ${fmt(bunga)})`;
+          steps = [
+            `Rumus Bunga Tunggal: Bunga = Modal × Bunga% × Waktu`,
+            `Besar bunga: Rp ${fmt(a)} × ${fmt(b)}% × ${fmt(c)} tahun = Rp ${fmt(bunga)}`,
+            `Total uang akhir: Rp ${fmt(a)} + Rp ${fmt(bunga)} = Rp ${fmt(r)}`
+          ];
+          break;
+
+        case 'markup':
+          [a, b] = need('a', 'b');
+          if (a === 0) throw new Error('Nilai awal tidak boleh nol.');
+          r = ((b - a) / a) * 100;
+          formula = `Perubahan = ((${fmt(b)} − ${fmt(a)}) / ${fmt(a)}) × 100% = ${fmt(r)}%`;
+          steps = [
+            `Hitung selisih: ${fmt(b)} − ${fmt(a)} = ${fmt(b - a)}`,
+            `Bagi nilai awal: ${fmt(b - a)} / ${fmt(a)} = ${fmt((b - a) / a)}`,
+            `Bentuk persentase: ${fmt((b - a) / a)} × 100% = ${fmt(r)}%`
           ];
           break;
 
@@ -1987,17 +2415,17 @@
           if (id === 'mean') {
             r = avg;
             steps = [
-              `Data yang diurutkan: [${ar.join(', ')}]`,
-              `Jumlah total seluruh data (Σx): ${fmt(sum)}`,
+              `Data terurut: [${ar.join(', ')}]`,
+              `Jumlah total data (Σx): ${fmt(sum)}`,
               `Banyaknya data (n): ${n}`,
-              `Hitung rata-rata: Σx / n = ${fmt(sum)} ÷ ${n} = ${fmt(r)}`
+              `Rata-rata: Σx / n = ${fmt(sum)} ÷ ${n} = ${fmt(r)}`
             ];
           } else if (id === 'median') {
             r = n % 2 !== 0 ? ar[Math.floor(n / 2)] : (ar[n / 2 - 1] + ar[n / 2]) / 2;
             steps = [
-              `Urutkan data dari terkecil ke terbesar: [${ar.join(', ')}]`,
-              `Banyaknya data: n = ${n} (${n % 2 !== 0 ? 'ganjil' : 'genap'})`,
-              `Ambil nilai posisi tengah: didapatkan median = ${fmt(r)}`
+              `Data terurut: [${ar.join(', ')}]`,
+              `Banyaknya data (n): ${n} (${n % 2 !== 0 ? 'ganjil' : 'genap'})`,
+              `Median (nilai tengah): ${fmt(r)}`
             ];
           } else if (id === 'mode') {
             let counts = {};
@@ -2010,84 +2438,34 @@
             });
             r = maxC === 1 && Object.keys(counts).length === ar.length ? 'Tidak ada modus' : mode.join(', ');
             steps = [
-              `Hitung frekuensi kemunculan setiap angka`,
-              `Angka yang paling sering muncul (${maxC} kali): ${r}`
+              `Frekuensi kemunculan angka dihitung`,
+              `Nilai yang paling sering muncul (${maxC} kali): ${r}`
             ];
           } else if (id === 'range') {
             r = ar[n - 1] - ar[0];
             steps = [
-              `Data terurut: [${ar.join(', ')}]`,
-              `Nilai maksimum: ${fmt(ar[n - 1])}, nilai minimum: ${fmt(ar[0])}`,
-              `Jangkauan: ${fmt(ar[n - 1])} − ${fmt(ar[0])} = ${fmt(r)}`
+              `Nilai tertinggi: ${fmt(ar[n - 1])}, nilai terendah: ${fmt(ar[0])}`,
+              `Jangkauan (Range): ${fmt(ar[n - 1])} − ${fmt(ar[0])} = ${fmt(r)}`
             ];
           } else if (id === 'variance') {
             const sumSq = ar.reduce((s, v) => s + (v - avg) ** 2, 0);
             r = sumSq / n;
             steps = [
               `Rata-rata data (μ): ${fmt(avg)}`,
-              `Hitung kuadrat selisih tiap data terhadap rata-rata: Σ(x − μ)² = ${fmt(sumSq)}`,
+              `Jumlah kuadrat selisih Σ(x − μ)² = ${fmt(sumSq)}`,
               `Varians = Σ(x − μ)² / n = ${fmt(sumSq)} ÷ ${n} = ${fmt(r)}`
             ];
           } else if (id === 'stddev') {
             const sumSq = ar.reduce((s, v) => s + (v - avg) ** 2, 0);
             r = Math.sqrt(sumSq / n);
             steps = [
-              `Hitung varians populasi: ${fmt(sumSq / n)}`,
-              `Tarik akar kuadrat dari varians: √${fmt(sumSq / n)} = ${fmt(r)}`
+              `Varians populasi: ${fmt(sumSq / n)}`,
+              `Simpangan Baku = √Varians = √${fmt(sumSq / n)} = ${fmt(r)}`
             ];
           }
           formula = `Statistika untuk [${ar.join(', ')}]`;
           break;
         }
-
-        case 'linear':
-          [a, b, c] = need('a', 'b', 'c');
-          if (a === 0) throw new Error('Koefisien a tidak boleh nol.');
-          r = (c - b) / a;
-          formula = `${a}x + (${b}) = ${c}  →  x = ${fmt(r)}`;
-          steps = [
-            `Bentuk persamaan: ${a}x + ${b} = ${c}`,
-            `Pindahkan konstanta ke ruas kanan: ${a}x = ${c} − (${b}) = ${fmt(c - b)}`,
-            `Bagi kedua ruas dengan a (${a}): x = ${fmt(c - b)} / ${a} = ${fmt(r)}`
-          ];
-          break;
-
-        case 'quadratic':
-        case 'discriminant':
-          [a, b, c] = need('a', 'b', 'c');
-          if (a === 0) throw new Error('Koefisien a tidak boleh nol pada persamaan kuadrat.');
-          const D = b * b - 4 * a * c;
-          if (id === 'discriminant') {
-            r = D;
-            formula = `D = b² − 4ac = ${fmt(b)}² − 4(${fmt(a)})(${fmt(c)}) = ${fmt(r)}`;
-            steps = [
-              `Rumus Diskriminan: D = b² − 4ac`,
-              `Hitung b²: ${fmt(b)}² = ${fmt(b * b)}`,
-              `Hitung 4ac: 4 × ${fmt(a)} × ${fmt(c)} = ${fmt(4 * a * c)}`,
-              `D = ${fmt(b * b)} − ${fmt(4 * a * c)} = ${fmt(D)} (${D > 0 ? 'D > 0: 2 akar real berbeda' : D === 0 ? 'D = 0: 2 akar kembar' : 'D < 0: akar imajiner/kompleks'})`
-            ];
-          } else {
-            if (D < 0) {
-              r = `Tidak ada akar real (D = ${fmt(D)} < 0)`;
-              formula = `Akar berupa bilangan kompleks`;
-              steps = [
-                `Hitung Diskriminan: D = b² − 4ac = ${fmt(D)}`,
-                `Karena D bernilai negatif (< 0), grafik tidak memotong sumbu X dan tidak memiliki akar real.`
-              ];
-            } else {
-              const x1 = (-b + Math.sqrt(D)) / (2 * a);
-              const x2 = (-b - Math.sqrt(D)) / (2 * a);
-              r = `x₁ = ${fmt(x1)} ; x₂ = ${fmt(x2)}`;
-              formula = `x = (−b ± √D) / 2a`;
-              steps = [
-                `Hitung Diskriminan: D = ${fmt(b)}² − 4(${fmt(a)})(${fmt(c)}) = ${fmt(D)}`,
-                `Gunakan rumus abc: x = (−(${fmt(b)}) ± √${fmt(D)}) / (2 × ${fmt(a)})`,
-                `x₁ = (${fmt(-b)} + ${fmt(Math.sqrt(D))}) / ${fmt(2 * a)} = ${fmt(x1)}`,
-                `x₂ = (${fmt(-b)} − ${fmt(Math.sqrt(D))}) / ${fmt(2 * a)} = ${fmt(x2)}`
-              ];
-            }
-          }
-          break;
 
         case 'temperature': {
           a = readVal('a');
@@ -2104,8 +2482,8 @@
 
           formula = `${fmt(a)}°${from} = ${fmt(r)}°${to}`;
           steps = [
-            `Konversi dari °${from} ke skala patokan Kelvin: ${fmt(k)} K`,
-            `Konversi dari Kelvin ke °${to}: didapatkan ${fmt(r)}°${to}`
+            `Konversi skala awal (°${from}) ke Kelvin: ${fmt(k)} K`,
+            `Konversi Kelvin ke skala target (°${to}): didapatkan ${fmt(r)}°${to}`
           ];
           break;
         }
@@ -2136,33 +2514,9 @@
         }
 
         default:
-          // Fallback umum untuk rumus lainnya
-          if (id === 'cubeVol') {
-            a = readVal('a'); r = a ** 3;
-            formula = `V = s³ = ${fmt(a)}³ = ${fmt(r)}`;
-            steps = [`Rumus Volume Kubus: V = sisi × sisi × sisi (s³)`, `V = ${fmt(a)}³ = ${fmt(r)}`];
-          } else if (id === 'cuboidVol') {
-            [a, b, c] = need('a', 'b', 'c'); r = a * b * c;
-            formula = `V = p × l × t = ${fmt(a)} × ${fmt(b)} × ${fmt(c)} = ${fmt(r)}`;
-            steps = [`Rumus Volume Balok: V = panjang × lebar × tinggi`, `V = ${fmt(a)} × ${fmt(b)} × ${fmt(c)} = ${fmt(r)}`];
-          } else if (id === 'cylinderVol') {
-            [a, b] = need('a', 'b'); r = Math.PI * a * a * b;
-            formula = `V = πr²t = π × ${fmt(a)}² × ${fmt(b)} = ${fmt(r)}`;
-            steps = [`Rumus Volume Tabung: V = luas alas lingkaran × tinggi (πr²t)`, `V = 3,14159 × ${fmt(a * a)} × ${fmt(b)} = ${fmt(r)}`];
-          } else if (id === 'sphereVol') {
-            a = readVal('a'); r = (4 / 3) * Math.PI * (a ** 3);
-            formula = `V = ⁴⁄₃πr³ = ⁴⁄₃ × π × ${fmt(a)}³ = ${fmt(r)}`;
-            steps = [`Rumus Volume Bola: V = ⁴⁄₃ × π × r³`, `V = ⁴⁄₃ × 3,14159 × ${fmt(a ** 3)} = ${fmt(r)}`];
-          } else if (id === 'sin' || id === 'cos' || id === 'tan') {
-            a = readVal('a'); r = Math[id](a * Math.PI / 180);
-            formula = `${id}(${fmt(a)}°) = ${fmt(r)}`;
-            steps = [`Ubah sudut ke bentuk radian: ${fmt(a)}° × (π / 180) = ${fmt(a * Math.PI / 180)} rad`, `Hitung nilai ${id}: ${fmt(r)}`];
-          } else {
-            // Rumus sederhana lainnya
-            r = 0;
-            formula = currentItem()[2];
-            steps = [`Gunakan rumus: ${formula}`, `Hasil perhitungan: ${fmt(r)}`];
-          }
+          r = 0;
+          formula = currentItem()[2];
+          steps = [`Gunakan rumus: ${formula}`, `Hasil perhitungan: ${fmt(r)}`];
       }
 
       return { value: fmt(r), formula, steps };
@@ -2198,15 +2552,28 @@
           }, 60);
         }
 
-        // Simpan ke Riwayat
+        // Simpan ke Riwayat dengan input lengkap untuk dimuat kembali
+        const currentInputs = {};
+        ['list', 'a', 'b', 'c', 'd', 'e', 'f', 'from', 'to'].forEach(k => {
+          const el = $('v_' + k);
+          if (el && el.value !== undefined) currentInputs[k] = el.value;
+        });
         const title = currentItem()[1];
-        history.unshift({ title, formula, value, date: new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }) });
+        history.unshift({
+          cat: currentCat,
+          formulaId: currentItem()[0],
+          title,
+          formula,
+          value,
+          inputs: currentInputs,
+          date: new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })
+        });
         if (history.length > 15) history.pop();
         localStorage.setItem('mathlab_history', JSON.stringify(history));
         renderHistory();
 
       } catch (err) {
-        alert('⚠️ ' + err.message);
+        showToast('⚠️ ' + err.message);
       }
     }
 
@@ -2227,6 +2594,68 @@
     });
 
     // Salin Hasil ke Clipboard
+
+    // Muat kembali perhitungan dari riwayat saat diklik
+    $('historyList').addEventListener('click', e => {
+      const itemEl = e.target.closest('.history-item');
+      if (!itemEl) return;
+      const idx = Number(itemEl.dataset.idx);
+      const h = history[idx];
+      if (!h) return;
+
+      if (h.cat && categories[h.cat]) {
+        currentCat = h.cat;
+        renderNav();
+        if (h.formulaId) {
+          $('formulaSelect').value = h.formulaId;
+          updateFormulaSelection();
+        }
+      }
+      if (h.inputs) {
+        Object.keys(h.inputs).forEach(k => {
+          const el = $('v_' + k);
+          if (el) el.value = h.inputs[k];
+        });
+      }
+      $('resultValue').textContent = h.value;
+      $('resultFormula').textContent = h.formula;
+      $('resultBox').classList.remove('hidden');
+      $('calcSection').scrollIntoView({ behavior: 'smooth' });
+      showToast('Rumus dari riwayat berhasil dimuat!');
+    });
+
+    // Fitur Suara (Speech Synthesis)
+    $('speakBtn').addEventListener('click', () => {
+      if (!('speechSynthesis' in window)) {
+        showToast('Fitur suara tidak didukung browser ini.');
+        return;
+      }
+      window.speechSynthesis.cancel();
+      const val = $('resultValue').textContent;
+      const title = currentItem()[1];
+      const utter = new SpeechSynthesisUtterance(`Perhitungan ${title}. Hasilnya adalah ${val}`);
+      utter.lang = 'id-ID';
+      utter.rate = 0.95;
+      window.speechSynthesis.speak(utter);
+      showToast('🔊 Membacakan jawaban...');
+    });
+
+    // Fitur Bagikan (Web Share API)
+    $('shareBtn').addEventListener('click', async () => {
+      const val = $('resultValue').textContent;
+      const formula = $('resultFormula').textContent;
+      const title = currentItem()[1];
+      const text = `MathLab — ${title}\nRumus: ${formula}\nHasil: ${val}`;
+      if (navigator.share) {
+        try {
+          await navigator.share({ title: 'MathLab', text });
+        } catch (e) {}
+      } else {
+        await navigator.clipboard.writeText(text);
+        showToast('📋 Teks berhasil disalin untuk dibagikan!');
+      }
+    });
+
     $('copyBtn').addEventListener('click', () => {
       const val = $('resultValue').textContent;
       const form = $('resultFormula').textContent;
@@ -2245,7 +2674,7 @@
         return;
       }
       container.innerHTML = history.map((h, i) => `
-        <div class="history-item" data-idx="${i}">
+        <div class="history-item" data-idx="${i}" title="Ketuk untuk memuat kembali rumus ini">
           <div class="history-info">
             <span class="history-title">${h.title}</span>
             <span class="history-formula">${h.formula}</span>
