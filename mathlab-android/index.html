@@ -3,9 +3,17 @@
   <head>
     <meta charset="UTF-8">
     <meta name="theme-color" content="#0b1020">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="MathLab">
+    <meta name="application-name" content="MathLab">
+    <meta name="format-detection" content="telephone=no">
     <link rel="manifest" href="manifest.json">
-    <link rel="apple-touch-icon" href="icons/icon-192.png">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+    <link rel="apple-touch-icon" sizes="192x192" href="icons/icon-192.png">
+    <link rel="apple-touch-icon" sizes="512x512" href="icons/icon-512.png">
     <title>
       MathLab — Kalkulator Matematika
     </title>
@@ -22,20 +30,32 @@
     --danger:#ff8e9b
 }
 * {
-    box-sizing:border-box
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent
 }
 body {
     margin:0;
     background:radial-gradient(ellipse at top left,#17294a 0,transparent 45%),var(--bg);
     color:var(--text);
     font:15px/1.5 Inter,system-ui,-apple-system,Segoe UI,sans-serif;
-    min-height:100vh
+    min-height:100vh;
+    min-height:-webkit-fill-available;
+    padding-top:env(safe-area-inset-top,0px);
+    padding-bottom:env(safe-area-inset-bottom,0px);
+    padding-left:env(safe-area-inset-left,0px);
+    padding-right:env(safe-area-inset-right,0px)
 }
 button,input,select {
     font:inherit
 }
 button {
-    cursor:pointer
+    cursor:pointer;
+    touch-action:manipulation;
+    user-select:none;
+    -webkit-user-select:none
+}
+button:active,.key:active,.chip:active {
+    transform:scale(.97)
 }
 .wrap {
     max-width:1240px;
@@ -350,12 +370,58 @@ button {
 .key.op {
     color:var(--accent)
 }
+.top-actions {
+    display:flex;
+    align-items:center;
+    gap:8px
+}
+.install-btn {
+    background:linear-gradient(135deg,var(--accent),var(--accent2));
+    color:#071421;
+    font-weight:750;
+    border:0;
+    padding:8px 14px;
+    border-radius:99px;
+    font-size:12px;
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    box-shadow:0 4px 14px #79e0c344;
+    transition:transform .15s ease
+}
+.ios-banner {
+    background:#152238;
+    border:1px solid #79e0c366;
+    color:var(--text);
+    padding:11px 14px;
+    border-radius:12px;
+    margin-bottom:16px;
+    font-size:12.5px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    line-height:1.4
+}
+.ios-banner button {
+    background:transparent;
+    border:0;
+    color:var(--muted);
+    font-size:18px;
+    line-height:1;
+    padding:4px 6px;
+    cursor:pointer
+}
 @media(max-width:760px) {
     .wrap {
-        padding:18px 12px 30px
+        padding:14px 12px 28px
+    }
+    .top {
+        margin-bottom:18px
     }
     .layout {
-        grid-template-columns:1fr
+        grid-template-columns:1fr;
+        gap:14px
     }
     .side {
         position:static;
@@ -364,17 +430,29 @@ button {
     .nav {
         display:flex;
         overflow-x:auto;
-        padding-bottom:2px
+        scroll-snap-type:x mandatory;
+        -webkit-overflow-scrolling:touch;
+        scrollbar-width:none;
+        gap:6px;
+        padding-bottom:4px
+    }
+    .nav::-webkit-scrollbar {
+        display:none
     }
     .nav button {
+        scroll-snap-align:start;
         white-space:nowrap;
-        flex-shrink:0
+        flex-shrink:0;
+        padding:10px 14px;
+        min-height:44px
     }
     .nav button.active {
         box-shadow:inset 0 -3px var(--accent)
     }
     .search {
-        margin-bottom:8px
+        margin-bottom:8px;
+        font-size:16px!important;
+        min-height:46px
     }
     .main {
         padding:16px
@@ -384,6 +462,26 @@ button {
     }
     .fields {
         grid-template-columns:1fr
+    }
+    .field input,.field select {
+        font-size:16px!important;
+        min-height:46px
+    }
+    .actions {
+        display:grid;
+        grid-template-columns:1fr 1fr;
+        gap:10px
+    }
+    .primary,.secondary {
+        min-height:46px;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        text-align:center
+    }
+    .key {
+        min-height:46px;
+        font-size:15px
     }
     .mainhead h3 {
         font-size:19px
@@ -407,10 +505,19 @@ button {
             </p>
           </div>
         </div>
-        <div class="pill">
-          ✦ Gratis · Tanpa login
+        <div class="top-actions">
+          <button id="installBtn" class="install-btn hidden" aria-label="Pasang Aplikasi MathLab">
+            ⬇ Pasang App
+          </button>
+          <div class="pill">
+            ✦ Gratis · Tanpa login
+          </div>
         </div>
       </header>
+      <div id="iosInstallBanner" class="ios-banner hidden">
+        <span>📱 <strong>Pasang di iPhone/iPad:</strong> Tekan tombol Bagikan di Safari (<span style="font-size:15px">⎋</span>), lalu pilih <strong>"Tambah ke Layar Utama"</strong>.</span>
+        <button id="closeIosBanner" aria-label="Tutup">&times;</button>
+      </div>
       <section class="hero">
         <div class="eyebrow">
           Belajar · Hitung · Pahami
@@ -639,18 +746,33 @@ button {
         return categories[cat].items.find(x=>x[0]===$('formula').value)||categories[cat].items[0]
     }
     function renderNav() {
-        document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('active',b.dataset.cat===cat));
+        document.querySelectorAll('#nav button').forEach(b=>{
+            const isActive = b.dataset.cat===cat;
+            b.classList.toggle('active', isActive);
+            if(isActive && window.innerWidth <= 760) {
+                b.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+            }
+        });
         $('title').textContent=categories[cat].title;
         $('desc').textContent=categories[cat].desc;
         $('count').textContent=categories[cat].items.length+' rumus';
         $('formula').innerHTML=categories[cat].items.map(i=>`<option value="${i[0]}">${titles[i[0]]||i[1]}</option>`).join('');
         renderFields();
         $('result').classList.add('hidden');
-        $('scientific').classList.toggle('hidden',cat!=='basic');$('quick').innerHTML=cat==='basic'?'<button class="chip" data-set="a" data-value="3.14">π ≈ 3,14</button><button class="chip" data-set="a" data-value="2.71828">e ≈ 2,718</button><button class="chip" data-set="a" data-value="100">100</button>':cat==='geometry'?'<span class="chip">Pastikan semua ukuran dalam satuan yang sama</span>':cat==='statistics'?'<span class="chip">Contoh data: 4, 6, 6, 8, 10</span>':''
+        $('scientific').classList.toggle('hidden',cat!=='basic');
+        $('quick').innerHTML=cat==='basic'?'<button class="chip" data-set="a" data-value="3.14">π ≈ 3,14</button><button class="chip" data-set="a" data-value="2.71828">e ≈ 2,718</button><button class="chip" data-set="a" data-value="100">100</button>':cat==='geometry'?'<span class="chip">Pastikan semua ukuran dalam satuan yang sama</span>':cat==='statistics'?'<span class="chip">Contoh data: 4, 6, 6, 8, 10</span>':'';
     }
     function renderFields() {
         const item=current();
-        $('fields').innerHTML=item[3].map(x=>{let [label,key]=x.split('|');if(key==='list')return `<div class="field" style="grid-column:1/-1"><label>${label}</label><input id="v_list" placeholder="Contoh: 4, 6, 6, 8, 10"></div>`;if(key==='from'||key==='to'){let opts=key==='from'||key==='to'?(cat==='conversion'&&item[0]==='temperature'?['C','F','K']:cat==='conversion'&&item[0]==='speed'?['km/jam','m/s']:cat==='conversion'&&item[0]==='mass'?['g','kg','mg','ton']:['mm','cm','m','km','in','ft']):[];return `<div class="field"><label>${label}</label><select id="v_${key}">${opts.map(o=>`<option>${o}</option>`).join('')}</select></div>`}return `<div class="field"><label>${label}</label><input id="v_${key}" type="number" step="any" placeholder="Masukkan ${label.toLowerCase()}" ${key==='a'?'autofocus':''}></div>`}).join('')
+        $('fields').innerHTML=item[3].map(x=>{
+            let [label,key]=x.split('|');
+            if(key==='list')return `<div class="field" style="grid-column:1/-1"><label for="v_list">${label}</label><input id="v_list" inputmode="text" enterkeyhint="done" placeholder="Contoh: 4, 6, 6, 8, 10"></div>`;
+            if(key==='from'||key==='to'){
+                let opts=key==='from'||key==='to'?(cat==='conversion'&&item[0]==='temperature'?['C','F','K']:cat==='conversion'&&item[0]==='speed'?['km/jam','m/s']:cat==='conversion'&&item[0]==='mass'?['g','kg','mg','ton']:['mm','cm','m','km','in','ft']):[];
+                return `<div class="field"><label for="v_${key}">${label}</label><select id="v_${key}">${opts.map(o=>`<option>${o}</option>`).join('')}</select></div>`;
+            }
+            return `<div class="field"><label for="v_${key}">${label}</label><input id="v_${key}" type="number" step="any" inputmode="decimal" enterkeyhint="done" placeholder="Masukkan ${label.toLowerCase()}"></div>`;
+        }).join('');
     }
     $('nav').addEventListener('click',e=>{const b=e.target.closest('button[data-cat]');if(b){cat=b.dataset.cat;renderNav()}});$('formula').addEventListener('change',()=>{renderFields();$('result').classList.add('hidden')});$('search').addEventListener('input',e=>{const q=e.target.value.toLowerCase();document.querySelectorAll('#nav button').forEach(b=>{const c=categories[b.dataset.cat];b.style.display=(!q||c.title.toLowerCase().includes(q)||c.items.some(i=>(titles[i[0]]||i[1]).toLowerCase().includes(q)))?'flex':'none'})});
     $('quick').addEventListener('click',e=>{const b=e.target.closest('[data-set]');if(b){const el=$('v_'+b.dataset.set);if(el)el.value=b.dataset.value}});
@@ -991,6 +1113,11 @@ button {
             $('value').textContent=value;
             $('formulaText').textContent=formula;
             $('result').classList.remove('hidden');
+            if(window.innerWidth <= 760) {
+                setTimeout(() => {
+                    $('result').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }, 50);
+            }
             history.unshift({title:titles[current()[0]]||current()[1],formula,value});
             if(history.length>10)history.pop();
             renderHistory();
@@ -1010,6 +1137,58 @@ button {
         $('history').innerHTML=history.map(h=>`<div class="historyitem"><span>${h.title} (${h.formula})</span><strong>${h.value}</strong></div>`).join('');
     }
     renderNav();
+
+    // Registrasi Service Worker untuk PWA & Mode Offline
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('./sw.js')
+                .then(reg => console.log('MathLab SW terdaftar:', reg.scope))
+                .catch(err => console.warn('Pendaftaran SW gagal:', err));
+        });
+    }
+
+    // Tombol Install PWA untuk Smartphone (Android / Chrome)
+    let deferredPrompt = null;
+    const installBtn = $('installBtn');
+
+    window.addEventListener('beforeinstallprompt', e => {
+        e.preventDefault();
+        deferredPrompt = e;
+        if (installBtn) installBtn.classList.remove('hidden');
+    });
+
+    if (installBtn) {
+        installBtn.addEventListener('click', async () => {
+            if (!deferredPrompt) return;
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            if (outcome === 'accepted') {
+                installBtn.classList.add('hidden');
+            }
+            deferredPrompt = null;
+        });
+    }
+
+    window.addEventListener('appinstalled', () => {
+        if (installBtn) installBtn.classList.add('hidden');
+        deferredPrompt = null;
+    });
+
+    // Petunjuk Install untuk iPhone / iPad (Safari)
+    const isIos = /iphone|ipad|ipod/.test(window.navigator.userAgent.toLowerCase());
+    const isStandalone = ('standalone' in window.navigator) && window.navigator.standalone;
+    const iosBanner = $('iosInstallBanner');
+    const closeIosBtn = $('closeIosBanner');
+
+    if (isIos && !isStandalone && !localStorage.getItem('iosPromptDismissed')) {
+        if (iosBanner) iosBanner.classList.remove('hidden');
+    }
+    if (closeIosBtn && iosBanner) {
+        closeIosBtn.addEventListener('click', () => {
+            iosBanner.classList.add('hidden');
+            localStorage.setItem('iosPromptDismissed', '1');
+        });
+    }
     </script>
   </body>
 </html>
